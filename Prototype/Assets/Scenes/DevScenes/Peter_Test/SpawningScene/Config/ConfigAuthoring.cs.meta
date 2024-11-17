@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 313cae416be270c408008ad07ccfede7
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - ArcherPrefab: {fileID: 7416812515017945697, guid: bf4cf10ba8a03f24d89110a586c8a610,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
