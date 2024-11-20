@@ -5,8 +5,8 @@ namespace Scenes.DevScenes.Peter_Test.SpawningScene
 {
     class ExecuteAuthoring : MonoBehaviour
     {
-        [Header("Spawn Archers (press G to spawn)")] public bool SpawnArchers;
-
+        public bool SpawnArchers;
+        public bool SpawnBuildings;
     }
 
     class ExecuteAuthoringBaker : Baker<ExecuteAuthoring>
@@ -15,8 +15,10 @@ namespace Scenes.DevScenes.Peter_Test.SpawningScene
         {
             var entity  = GetEntity(TransformUsageFlags.None);
             if(authoring.SpawnArchers) AddComponent<SpawnArchers>(entity);
+            if(authoring.SpawnBuildings) AddComponent<SpawnBuildings>(entity);
         }
     }
     
     public struct SpawnArchers : IComponentData {}
+    public struct SpawnBuildings : IComponentData {}
 }

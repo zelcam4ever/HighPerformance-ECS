@@ -15,6 +15,7 @@ namespace Scenes.DevScenes.Peter_Test.SpawningScene
         {
             state.RequireForUpdate<SpawnArchers>();
             state.RequireForUpdate<Config>();
+            //state.RequireForUpdate<RedArcher>();
         }
 
         [BurstCompile]
@@ -23,39 +24,46 @@ namespace Scenes.DevScenes.Peter_Test.SpawningScene
             state.Enabled = false;
             
             var config = SystemAPI.GetSingleton<Config>();
+            //var redArcherConfig = SystemAPI.GetSingleton<RedArcher>();
             
-            int redFormation = (int)math.sqrt(config.RedArcherCount);
-            int blueFormation = (int)math.sqrt(config.BlueArcherCount);
+            // int redFormation = (int)math.sqrt(config.RedArcherCount);
+            // int blueFormation = (int)math.sqrt(config.BlueArcherCount);
 
-            for (int c = 0; c < redFormation; c++)
+            foreach (var blueSpawnPoint in SystemAPI.Query<RefRO<LocalTransform>>().WithAll<BlueSpawnPoint>())
             {
-                for (int r = 0; r < redFormation; r++)
+                for (int c = 0; c < 5; c++)
                 {
-                    float3 position = new float3(c * 1.5f, 0, r * 1.5f);
-                    
-                    var archerInstance = state.EntityManager.Instantiate(config.RedArcherPrefab);
-                    state.EntityManager.SetComponentData(archerInstance, new LocalTransform
+                    for (int r = 0; r < 5; r++)
                     {
-                        Position = position,
-                        Rotation = quaternion.identity,
-                        Scale = 1.0f
-                    });
+                        float3 position = new float3(c * 1.5f, 0, r * 1.5f) + blueSpawnPoint.ValueRO.Position; //Creates formation offsets
+                    
+                        var archerInstance = state.EntityManager.Instantiate(config.BlueArcherPrefab);
+                        state.EntityManager.SetComponentData(archerInstance, new LocalTransform
+                        {
+                            Position = position,
+                            Rotation = quaternion.identity,
+                            Scale = 1.0f
+                        });
+                    }
                 }
             }
             
-            for (int c = 0; c < blueFormation; c++)
+            foreach (var redSpawnPoint in SystemAPI.Query<RefRO<LocalTransform>>().WithAll<RedSpawnPoint>())
             {
-                for (int r = 0; r < blueFormation; r++)
+                for (int c = 0; c < 5; c++)
                 {
-                    float3 position = new float3(c * 1.5f + 30, 0, r * 1.5f + 10);
-                    
-                    var archerInstance = state.EntityManager.Instantiate(config.BlueArcherPrefab);
-                    state.EntityManager.SetComponentData(archerInstance, new LocalTransform
+                    for (int r = 0; r < 5; r++)
                     {
-                        Position = position,
-                        Rotation = quaternion.identity,
-                        Scale = 1.0f
-                    });
+                        float3 position = new float3(c * 1.5f, 0, r * 1.5f) + redSpawnPoint.ValueRO.Position; //Creates formation offsets
+                    
+                        var archerInstance = state.EntityManager.Instantiate(config.RedArcherPrefab);
+                        state.EntityManager.SetComponentData(archerInstance, new LocalTransform
+                        {
+                            Position = position,
+                            Rotation = quaternion.identity,
+                            Scale = 1.0f
+                        });
+                    }
                 }
             }
         }
