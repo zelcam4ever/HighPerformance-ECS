@@ -16,17 +16,18 @@ namespace Scenes.DevScenes.Peter_Test.SpawningScene
         public void OnCreate(ref SystemState state)
         {
             state.RequireForUpdate<Config>();
-            startseed = 1;
-            rng = new Random(startseed);
+            // startseed = 1;
+            // rng = new Random(startseed);
         }
 
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
-            foreach (var archerTransform in SystemAPI.Query<RefRW<LocalTransform>>().WithAll<RedTag>())
-            {
-                archerTransform.ValueRW.Position += new float3(rng.NextFloat(-1.0f, 1.0f) * SystemAPI.Time.DeltaTime, 0, rng.NextFloat(-2.0f, 1.0f) * SystemAPI.Time.DeltaTime);
-            }
+            state.Enabled = false;
+            // foreach (var archerTransform in SystemAPI.Query<RefRW<LocalTransform>>().WithAll<RedTag>())
+            // {
+            //     archerTransform.ValueRW.Position += new float3(rng.NextFloat(-1.0f, 1.0f) * SystemAPI.Time.DeltaTime, 0, rng.NextFloat(-2.0f, 1.0f) * SystemAPI.Time.DeltaTime);
+            // }
         }
 
         [BurstCompile]

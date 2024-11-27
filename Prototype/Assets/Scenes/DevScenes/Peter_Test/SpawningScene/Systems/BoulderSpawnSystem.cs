@@ -1,7 +1,9 @@
+using System.Threading;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
+using UnityEngine;
 
 namespace Scenes.DevScenes.Peter_Test.SpawningScene
 {
@@ -20,15 +22,19 @@ namespace Scenes.DevScenes.Peter_Test.SpawningScene
             
             var config = SystemAPI.GetSingleton<Config>();
 
-            float3 position = new float3(20, 20, -20);
-                    
-            var boulderInstance = state.EntityManager.Instantiate(config.BigBoulderPrefab);
-            state.EntityManager.SetComponentData(boulderInstance, new LocalTransform
+            
+            for (int i = 0; i < 3; i++)
             {
-                Position = position,
-                Rotation = quaternion.identity,
-                Scale = 10.0f
-            });
+                float3 position = new float3(i*10, 20 , -60 - 5*i);
+                
+                var boulderInstance = state.EntityManager.Instantiate(config.BigBoulderPrefab);
+                state.EntityManager.SetComponentData(boulderInstance, new LocalTransform
+                {
+                    Position = position,
+                    Rotation = quaternion.identity,
+                    Scale = 10.0f
+                });
+            }
         }
 
         [BurstCompile]
