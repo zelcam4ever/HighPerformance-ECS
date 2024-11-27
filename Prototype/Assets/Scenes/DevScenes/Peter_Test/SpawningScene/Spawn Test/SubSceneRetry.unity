@@ -163,7 +163,7 @@ MonoBehaviour:
     type: 3}
   RedArcherCount: 100
   BlueArcherCount: 100
-  BattleSize: 2
+  BattleSize: 1
   SchedulingType: 1
 --- !u!4 &1495193942
 Transform:
