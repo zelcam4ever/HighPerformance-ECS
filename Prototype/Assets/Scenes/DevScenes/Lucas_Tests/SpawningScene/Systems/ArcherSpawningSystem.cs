@@ -35,14 +35,14 @@ namespace Scenes.DevScenes.Lucas_Tests.SpawningScene.Systems
                     // Calculate the formation size (e.g., square root for roughly square formation)
                     int columns = (int)math.ceil(math.sqrt(archersPerBattalion));
                     int rows = (int)math.ceil(archersPerBattalion / (float)columns);
-
+                    Debug.Log($"Num Columns: {columns}, Num Rows: {rows}");
                     for (int i = 0; i < archersPerBattalion; i++)
                     {
                         int x = i % columns;
                         int y = i / columns;
 
                         // Calculate position offset within each battalion
-                        float3 position = new float3(x * 1.5f, 0.0f, y * 1.5f) + new float3(b * 10, 0.0f, b * 10);
+                        float3 position = new float3(x * 1.5f, 0.0f, y * 1.5f) + new float3(b * 20, 0.0f, 0.0f);
 
                         // Instantiate the Archer at the calculated position
                         var archerInstance = state.EntityManager.Instantiate(config.ArcherPrefab);
