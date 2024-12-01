@@ -7,6 +7,7 @@ namespace Scenes.DevScenes.Lucas_Tests.SpawningScene.Authorings
     {
         public GameObject ProjectilePrefab;
         public Transform SpawnPoint;
+        public float Strength;
     }
 
     class Baker : Baker<ArcherAuthoring>
@@ -18,7 +19,8 @@ namespace Scenes.DevScenes.Lucas_Tests.SpawningScene.Authorings
             AddComponent(entity, new Archer
             {
                 ProjectilePrefab = GetEntity(authoring.ProjectilePrefab, TransformUsageFlags.Dynamic),
-                SpawnPoint = GetEntity(authoring.SpawnPoint, TransformUsageFlags.Dynamic)
+                SpawnPoint = GetEntity(authoring.SpawnPoint, TransformUsageFlags.Dynamic),
+                Strength = authoring.Strength
             });
         }
 
@@ -29,5 +31,6 @@ namespace Scenes.DevScenes.Lucas_Tests.SpawningScene.Authorings
     {
         public Entity ProjectilePrefab;
         public Entity SpawnPoint;
+        public float Strength;
     }
 }

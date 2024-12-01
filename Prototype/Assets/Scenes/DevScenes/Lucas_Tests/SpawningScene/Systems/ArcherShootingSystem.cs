@@ -40,16 +40,15 @@ namespace Scenes.DevScenes.Lucas_Tests.SpawningScene.Systems
                     // Add velocity to the projectile if it has a PhysicsVelocity component
                     if (state.EntityManager.HasComponent<PhysicsVelocity>(projectile))
                     {
-                        float3 shootDirection =
-                            math.forward(SystemAPI.GetComponent<LocalToWorld>(spawnPoint).Rotation); // Adjust to the correct direction
-                        float projectileSpeed = 1000f; // Customize this value as needed
+                        float3 shootDirection = math.mul(SystemAPI.GetComponent<LocalToWorld>(spawnPoint).Rotation, new float3(0, 1, 0)); // Adjust to the correct direction
+                      
 
                         state.EntityManager.SetComponentData(projectile, new PhysicsVelocity
                         {
-                            Linear = shootDirection * projectileSpeed,
+                            Linear = shootDirection * archer.ValueRO.Strength,
                             Angular = float3.zero
                         });
-                        Debug.Log("Something" + state.EntityManager.GetComponentData<PhysicsVelocity>(projectile).Linear);
+                        // Debug.Log("Something" + state.EntityManager.GetComponentData<PhysicsVelocity>(projectile).Linear);
                     }
                 }
             }
