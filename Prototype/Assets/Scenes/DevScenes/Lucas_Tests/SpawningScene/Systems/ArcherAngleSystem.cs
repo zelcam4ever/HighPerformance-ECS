@@ -23,16 +23,23 @@ namespace Scenes.DevScenes.Lucas_Tests.SpawningScene.Systems
             foreach (var (transform, aimer) in SystemAPI.Query<RefRW<LocalTransform>, RefRO<Aimer>>())
             {
                 float3 startPosition = aimer.ValueRO.WoldPosition + transform.ValueRO.Position;
-                float3 targetPosition = aimer.ValueRO.TargetPosition;
-                float v0 = aimer.ValueRO.VInitial;                
+                Entity target = aimer.ValueRO.TargetPosition;
+                float3 targetPosition = SystemAPI.GetComponent<LocalTransform>(target).Position;
+                var v0 = aimer.ValueRO.VInitial;                
                 
-                float x = math.length(new float3(targetPosition.x - startPosition.x, 0, targetPosition.z - startPosition.z));
-                float h = startPosition.y + transform.ValueRO.Position.y - targetPosition.y;
-                float t = math.atan2(x, h);
-                float a = g * math.pow(x, 2) / math.pow(v0, 2);
-                float denominator = math.sqrt(math.pow(h, 2) + math.pow(x, 2));
-                float total =math.acos((a - h) / denominator);
-                float angle = 1.570f -((total + t) / 2);
+                var x = math.length(new float3(targetPosition.x - startPosition.x, 0, targetPosition.z - startPosition.z));
+                var h = startPosition.y + transform.ValueRO.Position.y - targetPosition.y;
+                var t = math.atan2(x, h);
+                var a = g * math.pow(x, 2) / math.pow(v0, 2);
+                var denominator = math.sqrt(math.pow(h, 2) + math.pow(x, 2));
+                var cos = (a - h) / denominator;
+                if (cos is < -1 or > 1)
+                {
+                    //Target is unreachable!
+                    continue;
+                }
+                var total =math.acos(cos);
+                var angle = 1.570f -((total + t) / 2);
                 
                 //Debug.Log(math.degrees(angle));
                 

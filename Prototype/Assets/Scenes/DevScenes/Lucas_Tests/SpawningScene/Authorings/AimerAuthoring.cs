@@ -19,7 +19,7 @@ namespace Scenes.DevScenes.Lucas_Tests.SpawningScene.Authorings
             AddComponent(entity, new Aimer()
             {
                 WoldPosition = authoring.worldPosition.position,
-                TargetPosition = authoring.targetPosition.position,
+                TargetPosition = GetEntity(authoring.targetPosition, TransformUsageFlags.Dynamic),
                 VInitial = authoring.vInitial
             });
         }
@@ -28,7 +28,7 @@ namespace Scenes.DevScenes.Lucas_Tests.SpawningScene.Authorings
     public struct Aimer : IComponentData
     {
         public float3 WoldPosition;
-        public float3 TargetPosition;
+        public Entity TargetPosition;
         public float VInitial;
     }
 }
