@@ -1,6 +1,7 @@
 
 using Scenes.DevScenes.Lucas_Tests.SpawningScene.Authorings;
 using Scenes.DevScenes.Lucas_Tests.SpawningScene.Config;
+using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Transforms;
@@ -15,15 +16,16 @@ namespace Scenes.DevScenes.Lucas_Tests.SpawningScene.Systems
     {
         private ComponentLookup<LocalTransform> _localTransformLookup;
         private ComponentLookup<LocalToWorld> _localToWorldLookup;
+        
+        [BurstCompile]
         public void OnCreate(ref SystemState state)
         {
             state.RequireForUpdate<ArcherShooting>();
             _localTransformLookup = state.GetComponentLookup<LocalTransform>(true);
             _localToWorldLookup = state.GetComponentLookup<LocalToWorld>(true); // Set as ReadOnly
         }
-            // System setup, if needed
-        
-
+            
+        [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
             _localTransformLookup.Update(ref state);
@@ -42,8 +44,8 @@ namespace Scenes.DevScenes.Lucas_Tests.SpawningScene.Systems
                 LocalToWorldLookup = _localToWorldLookup
             }.ScheduleParallel(state.Dependency);
         }
-    
-
+        
+        [BurstCompile]
         public partial struct ShootingJob : IJobEntity
         {
             public int CurrentFrame;
