@@ -2,15 +2,18 @@ using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
+using Unity.Physics;
 using Unity.Transforms;
 using Unity.VisualScripting.FullSerializer;
+using UnityEngine;
 
 namespace Scenes.DevScenes.Peter_Test.SpawningScene
 {
+    [UpdateAfter(typeof(SetPhysicsMassBehaviourSystem))]
     partial struct MovementSystem : ISystem
     {
-        private uint startseed;
-        private Random rng;
+        // private uint startseed;
+        // private Random rng;
         
         [BurstCompile]
         public void OnCreate(ref SystemState state)
@@ -23,11 +26,18 @@ namespace Scenes.DevScenes.Peter_Test.SpawningScene
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
-            state.Enabled = false;
-            // foreach (var archerTransform in SystemAPI.Query<RefRW<LocalTransform>>().WithAll<RedTag>())
-            // {
-            //     archerTransform.ValueRW.Position += new float3(rng.NextFloat(-1.0f, 1.0f) * SystemAPI.Time.DeltaTime, 0, rng.NextFloat(-2.0f, 1.0f) * SystemAPI.Time.DeltaTime);
-            // }
+            //state.Enabled = false;
+            foreach (var (archerVelocity, physicsMass)  in SystemAPI.Query<RefRW<PhysicsVelocity>,RefRO<SetPhysicsMass>>().WithAll<RedTag>())
+            {
+                if (physicsMass.ValueRO.Alive)
+                {
+                    archerVelocity.ValueRW.Linear[0] = 1;
+                }
+                else
+                {
+                    archerVelocity.ValueRW.Linear[0] = archerVelocity.ValueRW.Linear[0];
+                }
+            }
         }
 
         [BurstCompile]

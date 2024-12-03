@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 588683558309852062}
   - component: {fileID: 3922995671089810798}
   - component: {fileID: 1520676195714591032}
+  - component: {fileID: 3133020457680647149}
   m_Layer: 0
   m_Name: RedArcherCapsule
   m_TagString: Untagged
@@ -266,7 +267,7 @@ MonoBehaviour:
     x: 0
     y: 0
     z: 0
-  m_GravityFactor: 1
+  m_GravityFactor: 0.5
   m_OverrideDefaultMassDistribution: 0
   m_CenterOfMass:
     x: 0
@@ -292,3 +293,23 @@ MonoBehaviour:
     Tag05: 0
     Tag06: 0
     Tag07: 0
+--- !u!114 &3133020457680647149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7416812515017945697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd7f6bfbb5c34e245aa1d181e45c1680, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Alive: 1
+  BaselineInertiaX: 100
+  BaselineInertiaY: 8.695652
+  BaselineInertiaZ: 100
+  InfiniteInertiaX: 1
+  InfiniteInertiaY: 0
+  InfiniteInertiaZ: 1
+  InfiniteMass: 0

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3624073261537312580}
   - component: {fileID: 2765127844252151629}
   - component: {fileID: 3155013974502592604}
+  - component: {fileID: 6357573703994425846}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -103,9 +104,9 @@ MonoBehaviour:
   m_LinearDamping: 0.01
   m_AngularDamping: 0.05
   m_InitialLinearVelocity:
-    x: 0
-    y: 5
-    z: 20
+    x: -40
+    y: -10
+    z: 0
   m_InitialAngularVelocity:
     x: 0
     y: 0
@@ -185,7 +186,7 @@ MonoBehaviour:
     m_Template: {fileID: 0}
     m_CollisionResponse:
       m_Override: 0
-      m_Value: 0
+      m_Value: 1
     m_Friction:
       m_Override: 0
       m_Value:
@@ -279,3 +280,15 @@ MonoBehaviour:
         Tag07: 0
     m_SerializedVersion: 1
   m_SerializedVersion: 1
+--- !u!114 &6357573703994425846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 486808689964085186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be82b6adaf098e54eafd7b08fe3c6dff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

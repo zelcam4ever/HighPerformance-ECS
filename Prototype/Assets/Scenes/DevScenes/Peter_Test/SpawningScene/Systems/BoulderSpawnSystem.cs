@@ -23,16 +23,16 @@ namespace Scenes.DevScenes.Peter_Test.SpawningScene
             var config = SystemAPI.GetSingleton<Config>();
 
             
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 5; i++)
             {
-                float3 position = new float3(i*10, 20 , -60 - 5*i);
+                float3 position = new float3(500 + 10*i, 50, 15 -3*i);
                 
                 var boulderInstance = state.EntityManager.Instantiate(config.BigBoulderPrefab);
                 state.EntityManager.SetComponentData(boulderInstance, new LocalTransform
                 {
                     Position = position,
                     Rotation = quaternion.identity,
-                    Scale = 10.0f
+                    Scale = 3.0f
                 });
             }
         }

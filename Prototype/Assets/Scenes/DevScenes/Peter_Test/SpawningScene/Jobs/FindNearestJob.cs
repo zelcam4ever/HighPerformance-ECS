@@ -32,8 +32,6 @@ namespace Scenes.DevScenes.Peter_Test.SpawningScene
                     //Debug.Log("Target Pos" + NearestTargetPositions[index]);
                     
                 }
-
-                
             }
         }
     }
