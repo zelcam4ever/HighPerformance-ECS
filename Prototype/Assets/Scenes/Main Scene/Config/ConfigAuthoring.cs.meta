@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: e4be7d018f9aee944822f7d6255df196
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - RedArcherPrefab: {fileID: 7416812515017945697, guid: bf4cf10ba8a03f24d89110a586c8a610,
+      type: 3}
+  - BlueArcherPrefab: {fileID: 7416812515017945697, guid: 5a531d5d7d653ce41b0f0f71336053e2,
+      type: 3}
+  - BlueSpawnPoint: {fileID: 2172845667938622797, guid: 0481003e10c57b0478a04c63cfea0140,
+      type: 3}
+  - RedSpawnPoint: {fileID: 2172845667938622797, guid: 3fa45ec77bd77ee48ae7a01f239b97d7,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

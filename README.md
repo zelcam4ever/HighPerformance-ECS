@@ -9,6 +9,8 @@ We imported the first iteration of packages and planned some individual research
 Added a folder environment for test scenes. This includes some tutorial works and project work.
 For the project - Added a test scene for spawning in archers in Battalion formation. Slight issues with model scaling.
 
+
+
 ### 27th November
 
 We need an environment for the archers to fight in. We talked about doing a Castle made up of primitives and a slide for the boulder to go down on.
@@ -20,3 +22,4 @@ Tagging archers with a IsDead tag (or disable a IsAlive tag) when they are hit b
 # Optimization steps:
 Deploy divide and conquer search algorithm for closest target.
 Other profiling stuff
+

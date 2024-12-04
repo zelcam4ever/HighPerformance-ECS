@@ -22,6 +22,7 @@ namespace Scenes.DevScenes.Lucas_Tests.SpawningScene.Authorings
                 SpawnPoint = GetEntity(authoring.SpawnPoint, TransformUsageFlags.Dynamic),
                 Strength = authoring.Strength
             });
+            AddComponent<IsAlive>(entity);
         }
 
       
@@ -33,4 +34,6 @@ namespace Scenes.DevScenes.Lucas_Tests.SpawningScene.Authorings
         public Entity SpawnPoint;
         public float Strength;
     }
+    
+    public struct IsAlive :IComponentData {}
 }
