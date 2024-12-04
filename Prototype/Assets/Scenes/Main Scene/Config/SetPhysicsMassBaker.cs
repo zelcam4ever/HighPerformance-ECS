@@ -3,11 +3,11 @@ using Unity.Physics;
 using Unity.Physics.Authoring;
 using UnityEngine;
 
-namespace Scenes.DevScenes.Peter_Test.SpawningScene
+namespace Scenes.Main_Scene
 {
     public class SetPhysicsMassBaker : MonoBehaviour
     {
-        public bool Alive = true;
+        [Header("Physics Mass")] public bool Alive = true;
 
         //These magic numbers are the baseline inertias for a capsule physics mass
         public float BaselineInertiaX = 3.305785f;

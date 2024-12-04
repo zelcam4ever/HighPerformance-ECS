@@ -1,4 +1,4 @@
-using Scenes.DevScenes.Peter_Test.SpawningScene;
+using Scenes.Main_Scene;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Collections;
@@ -8,6 +8,8 @@ using Unity.Physics;
 using Unity.Physics.Systems;
 using UnityEngine;
 using UnityEngine.UIElements;
+using BoulderTag = Scenes.DevScenes.Peter_Test.SpawningScene.BoulderTag;
+using SetPhysicsMass = Scenes.DevScenes.Peter_Test.SpawningScene.SetPhysicsMass;
 
 partial struct CollideSystem : ISystem
 {
