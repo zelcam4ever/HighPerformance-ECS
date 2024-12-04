@@ -6,6 +6,8 @@ namespace Scenes.DevScenes.Lucas_Tests.SpawningScene.Config
     class ExecuteAuthoring : MonoBehaviour
     {
         [Header("Spawn Archers (press G to spawn)")] public bool SpawnArchers;
+        [Header("Allow Archers to shoot")] public bool ArcherShooting;
+        [Header("Arrow Physics")] public bool ArrowPhysics;
 
     }
 
@@ -15,8 +17,12 @@ namespace Scenes.DevScenes.Lucas_Tests.SpawningScene.Config
         {
             var entity  = GetEntity(TransformUsageFlags.None);
             if(authoring.SpawnArchers) AddComponent<SpawnArchers>(entity);
+            if(authoring.ArcherShooting) AddComponent<ArcherShooting>(entity);
+            if(authoring.ArrowPhysics) AddComponent<ArrowPhysics>(entity);
         }
     }
     
     public struct SpawnArchers : IComponentData {}
+    public struct ArcherShooting : IComponentData {}
+    public struct ArrowPhysics : IComponentData {}
 }
