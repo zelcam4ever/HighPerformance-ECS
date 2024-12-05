@@ -13,6 +13,7 @@ namespace Scenes.DevScenes.Peter_Test.SpawningScene
         public void OnCreate(ref SystemState state)
         {
             state.RequireForUpdate<Config>();
+            
         }
 
         [BurstCompile]
@@ -21,7 +22,6 @@ namespace Scenes.DevScenes.Peter_Test.SpawningScene
             state.Enabled = false;
             
             var config = SystemAPI.GetSingleton<Config>();
-
             
             for (int i = 0; i < 5; i++)
             {
