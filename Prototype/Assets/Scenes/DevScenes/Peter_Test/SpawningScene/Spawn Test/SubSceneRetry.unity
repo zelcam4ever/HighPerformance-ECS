@@ -140,7 +140,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!23 &1112124721
 MeshRenderer:
@@ -200,13 +200,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1112124719}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0.018586649, w: 0.9998273}
-  m_LocalPosition: {x: 96.94369, y: -15.9, z: 53.600132}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 96.94369, y: -5, z: 53.600132}
   m_LocalScale: {x: 1000, y: 1, z: 1000}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 2.13}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1112124724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -441,9 +441,11 @@ MonoBehaviour:
     type: 3}
   BigBoulderPrefab: {fileID: 486808689964085186, guid: 92ccaf67d682a5e47a60327fc2b4b7ae,
     type: 3}
+  WallPrefab: {fileID: 6122087690586230314, guid: 5b5944f9a1672554f9694d1aa73ae6da,
+    type: 3}
   RedArcherCount: 100
   BlueArcherCount: 100
-  BattleSize: 2
+  BattleSize: 1
   SchedulingType: 1
 --- !u!4 &1495193942
 Transform:
@@ -472,8 +474,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8441c94f16b7984c8bfa473cbf24a51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpawnArchers: 1
-  SpawnBuildings: 0
+  SpawnArchers: 0
+  SpawnBuildings: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

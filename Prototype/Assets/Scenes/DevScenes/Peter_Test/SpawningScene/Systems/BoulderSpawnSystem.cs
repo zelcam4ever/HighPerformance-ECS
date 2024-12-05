@@ -25,7 +25,7 @@ namespace Scenes.DevScenes.Peter_Test.SpawningScene
             
             for (int i = 0; i < 5; i++)
             {
-                float3 position = new float3(500 + 10*i, 50, 15 -3*i);
+                float3 position = new float3(400, 50, 0);
                 
                 var boulderInstance = state.EntityManager.Instantiate(config.BigBoulderPrefab);
                 state.EntityManager.SetComponentData(boulderInstance, new LocalTransform

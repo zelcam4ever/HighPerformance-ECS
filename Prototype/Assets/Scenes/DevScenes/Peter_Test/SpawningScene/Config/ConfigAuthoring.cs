@@ -13,6 +13,7 @@ namespace Scenes.DevScenes.Peter_Test.SpawningScene
         public GameObject BlueSpawnPoint;
         public GameObject RedSpawnPoint;
         public GameObject BigBoulderPrefab;
+        public GameObject WallPrefab;
         public int RedArcherCount;
         public int BlueArcherCount;
         public BattleSize BattleSize;
@@ -48,6 +49,7 @@ namespace Scenes.DevScenes.Peter_Test.SpawningScene
                 BlueSpawnPoint = GetEntity(authoring.BlueSpawnPoint, TransformUsageFlags.None),
                 RedSpawnPoint = GetEntity(authoring.RedSpawnPoint, TransformUsageFlags.None),
                 BigBoulderPrefab = GetEntity(authoring.BigBoulderPrefab, TransformUsageFlags.Dynamic),
+                WallPrefab = GetEntity(authoring.WallPrefab, TransformUsageFlags.Dynamic),
                 RedArcherCount = authoring.RedArcherCount,
                 BlueArcherCount = authoring.BlueArcherCount,
                 SchedulingType = authoring.SchedulingType,
@@ -66,6 +68,7 @@ namespace Scenes.DevScenes.Peter_Test.SpawningScene
         public Entity BlueSpawnPoint;
         public Entity RedSpawnPoint;
         public Entity BigBoulderPrefab;
+        public Entity WallPrefab;
         public int RedArcherCount;
         public int BlueArcherCount;
         public SchedulingType SchedulingType;
