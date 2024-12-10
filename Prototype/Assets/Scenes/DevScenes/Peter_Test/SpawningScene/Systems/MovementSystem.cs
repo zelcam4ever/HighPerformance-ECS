@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Scenes.DevScenes.Peter_Test.SpawningScene
 {
-    [UpdateAfter(typeof(SetPhysicsMassBehaviourSystem))]
+    //[UpdateAfter(typeof(SetPhysicsMassBehaviourSystem))]
     partial struct MovementSystem : ISystem
     {
         // private uint startseed;
