@@ -18,7 +18,7 @@ namespace Scenes.DevScenes.Peter_Test.SpawningScene
         public int BlueArcherCount;
         public BattleSize BattleSize;
         public SchedulingType SchedulingType;
-        
+        public int WallStrength;
     }
 
     class ConfigAuthoringBaker : Baker<ConfigAuthoring>
@@ -54,6 +54,7 @@ namespace Scenes.DevScenes.Peter_Test.SpawningScene
                 BlueArcherCount = authoring.BlueArcherCount,
                 SchedulingType = authoring.SchedulingType,
                 BattleSize = authoring.BattleSize, 
+                WallStrength = authoring.WallStrength,
                 // RedPositions = new NativeArray<float3>(armySize, Allocator.Persistent),
                 // BluePositions = new NativeArray<float3>(armySize, Allocator.Persistent),
                 // NearestTargetPositions = new NativeArray<float3>(armySize, Allocator.Persistent),
@@ -73,6 +74,7 @@ namespace Scenes.DevScenes.Peter_Test.SpawningScene
         public int BlueArcherCount;
         public SchedulingType SchedulingType;
         public BattleSize BattleSize;
+        public int WallStrength;
         // public NativeArray<float3> RedPositions;
         // public NativeArray<float3> BluePositions;
         // public NativeArray<float3> NearestTargetPositions;
