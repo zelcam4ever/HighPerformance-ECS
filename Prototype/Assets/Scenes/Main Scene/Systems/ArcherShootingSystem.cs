@@ -58,13 +58,49 @@ namespace Scenes.Main_Scene
                 if (!physicsMass.Alive)
                     return;
                 
+                const float g = 9.8f;
+                
+                if (!LocalTransformLookup.TryGetComponent(archer.Aimer, out var aimer))
+                    return;
+                if (!LocalToWorldLookup.TryGetComponent(archer.SpawnPoint, out var spawnPoint))
+                    return;
+                
+                float3 startPosition = spawnPoint.Position;
+                float3 targetPosition = archer.TargetPosition;
+
+                var v0 = archer.Strength;                
+                
+                var x = math.length(new float3(targetPosition.x - startPosition.x, 0, targetPosition.z - startPosition.z));
+                var h = startPosition.y - targetPosition.y;
+                var t = math.atan2(x, h);
+                var a = g * math.pow(x, 2) / math.pow(v0, 2);
+                var denominator = math.sqrt(math.pow(h, 2) + math.pow(x, 2));
+                var cos = (a - h) / denominator;
+                if (cos is < -1 or > 1)
+                {
+                    //Target is unreachable!
+                    return;
+                }
+                var total =math.acos(cos);
+                var angle = 1.570f -((total + t) / 2);
+                
+                //Debug.Log(math.degrees(angle));
+                
+                quaternion aimRotation = quaternion.RotateX(angle);
+                ECB.SetComponent(entityInQueryIndex, archer.Aimer, new LocalTransform
+                {
+                    Position = aimer.Position, // Keep the position (or modify as needed)
+                    Rotation = aimRotation,
+                    Scale = 1f // Set scale (modify if required)
+                });
+                aimer.Rotation = aimRotation;
+                
                 // Move outside job?
                 if (CurrentFrame % (60 * 5) != 0) return;
 
                 // Get the spawn point and projectile prefab
                 // Get the spawn point's LocalToWorld
-                if (!LocalToWorldLookup.TryGetComponent(archer.SpawnPoint, out var spawnPoint))
-                    return; // Skip if spawn point data is missing
+                 // Skip if spawn point data is missing
 
 
                 // Instantiate the projectile

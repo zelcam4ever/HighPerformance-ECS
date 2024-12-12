@@ -36,7 +36,6 @@ namespace Scenes.Main_Scene
                     for (int r = 0; r < 5; r++)
                     {
                         float3 position = new float3(c * 1.5f, 0, r * 1.5f) + blueSpawnPoint.ValueRO.Position; //Creates formation offsets
-                    
                         var archerInstance = state.EntityManager.Instantiate(config.BlueArcherPrefab);
                         state.EntityManager.SetComponentData(archerInstance, new LocalTransform
                         {
@@ -55,12 +54,14 @@ namespace Scenes.Main_Scene
                     for (int r = 0; r < 5; r++)
                     {
                         float3 position = new float3(c * 1.5f, 0, r * 1.5f) + redSpawnPoint.ValueRO.Position; //Creates formation offsets
-                    
+                        float3 offset = new float3(0, 0, 40f);
                         var archerInstance = state.EntityManager.Instantiate(config.RedArcherPrefab);
+                        quaternion rotation = quaternion.Euler(0f, math.radians(180f), 0f);
+                        
                         state.EntityManager.SetComponentData(archerInstance, new LocalTransform
                         {
-                            Position = position,
-                            Rotation = quaternion.identity,
+                            Position = position + offset,
+                            Rotation = rotation,
                             Scale = 1.0f
                         });
                     }
