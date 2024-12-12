@@ -64,7 +64,7 @@ public struct JointCollisionEvent : IImpulseEventsJob
             var jointCompanionBuffer = JointCompanionBuffer[jointToBreak];
             for (int i = 0; i < jointCompanionBuffer.Length; i++)
             {
-                Debug.Log("DESTROYED" + impulseEvent.Impulse);
+                // Debug.Log("DESTROYED" + impulseEvent.Impulse);
                 ecb.DestroyEntity(jointCompanionBuffer[i].JointEntity);
             }
         }

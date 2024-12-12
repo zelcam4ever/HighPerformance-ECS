@@ -22,43 +22,19 @@ namespace Scenes.DevScenes.Peter_Test.SpawningScene
             state.Enabled = false;
             var config = SystemAPI.GetSingleton<Config>();
 
-
-            float3 position = new float3(0, -3, 0);
-
-            var wallInstance = state.EntityManager.Instantiate(config.WallPrefab);
-            state.EntityManager.SetComponentData(wallInstance, new LocalTransform
+            for (int i = 0; i < 1; i++)
             {
-                Position = position,
-                Rotation = quaternion.identity,
-                Scale = 1.0f
-            });
 
-            var joints = ComponentLookup<RigidJoint>;
+                float3 position = new float3(0, 100, 1000 * i);
 
-        }
-    }
-
-    [BurstCompile]
-    public struct JointCollisionEvent : IImpulseEventsJob
-    {
-        [ReadOnly] public BufferLookup<PhysicsJointCompanion> JointCompanionBuffer;
-        public EntityCommandBuffer ecb;
-
-        public void Execute(ImpulseEvent impulseEvent)
-        {
-            Entity jointToBreak = impulseEvent.JointEntity;
-
-            if (JointCompanionBuffer.HasBuffer(jointToBreak))
-            {
-                var jointCompanionBuffer = JointCompanionBuffer[jointToBreak];
-                for (int i = 0; i < jointCompanionBuffer.Length; i++)
+                var wallInstance = state.EntityManager.Instantiate(config.WallPrefab);
+                state.EntityManager.SetComponentData(wallInstance, new LocalTransform
                 {
-                    Debug.Log("DESTROYED" + impulseEvent.Impulse);
-                    ecb.DestroyEntity(jointCompanionBuffer[i].JointEntity);
-                }
+                    Position = position,
+                    Rotation = quaternion.identity,
+                    Scale = 1.0f
+                });
             }
-
-            ecb.DestroyEntity(jointToBreak);
         }
     }
 }
