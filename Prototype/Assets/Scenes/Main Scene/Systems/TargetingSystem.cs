@@ -73,11 +73,13 @@ namespace Scenes.Main_Scene
             JobHandle findNearestRedHandle = findRedTargetsJob.Schedule(RedPositions.Length, 100);
             findNearestRedHandle.Complete();
             
-            for (int i = 0; i < RedPositions.Length; i++)
+            int index = 0;
+            foreach (var archer in SystemAPI.Query<RefRW<Archer>,RefRO<LocalTransform>>().WithAll<RedTag>())
             {
-                //Debug.Log("Red:" + RedPositions[i] + ", Nearest: " + NearestTargetPositions[i]);
-                Debug.DrawLine(RedPositions[i], NearestTargetPositions[i]);
-            }
+                archer.Item1.ValueRW.TargetPosition = NearestTargetPositions[index];
+                Debug.DrawLine(archer.Item2.ValueRO.Position, NearestTargetPositions[index], Color.red);
+                index++;
+            };
             
             FindNearestJob findBlueTargetsJob = new FindNearestJob
             {
@@ -88,12 +90,14 @@ namespace Scenes.Main_Scene
             
             JobHandle findNearestBlueHandle = findBlueTargetsJob.Schedule(RedPositions.Length, 100);
             findNearestBlueHandle.Complete();
-            
-            for (int i = 0; i < BluePositions.Length; i++)
+            index = 0;
+            foreach (var archer in SystemAPI.Query<RefRW<Archer>,RefRO<LocalTransform>>().WithAll<BlueTag>())
             {
-                //Debug.Log("Red:" + RedPositions[i] + ", Nearest: " + NearestTargetPositions[i]);
-                Debug.DrawLine(BluePositions[i], NearestTargetPositions[i]);
-            }
+                archer.Item1.ValueRW.TargetPosition = NearestTargetPositions[index];
+                Debug.DrawLine(archer.Item2.ValueRO.Position, NearestTargetPositions[index], Color.blue);
+                index++;
+            };
+            
             
             RedPositions.Dispose();
             BluePositions.Dispose();

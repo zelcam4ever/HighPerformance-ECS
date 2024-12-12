@@ -46,7 +46,6 @@ namespace Scenes.DevScenes.Peter_Test.SpawningScene
                     break;
             }
             
-            
             int count = 0;
             foreach (var archerTransform in SystemAPI.Query<RefRO<LocalTransform>>().WithAll<RedTag>())
             {
@@ -73,6 +72,13 @@ namespace Scenes.DevScenes.Peter_Test.SpawningScene
             JobHandle findNearestRedHandle = findRedTargetsJob.Schedule(RedPositions.Length, 100);
             findNearestRedHandle.Complete();
             
+            int index = 0;
+            foreach (var archer in SystemAPI.Query<RefRW<Main_Scene.Archer>>().WithAll<RedTag>())
+            {
+                archer.ValueRW.TargetPosition = NearestTargetPositions[index];
+                index++;
+            }
+            
             for (int i = 0; i < RedPositions.Length; i++)
             {
                 //Debug.Log("Red:" + RedPositions[i] + ", Nearest: " + NearestTargetPositions[i]);
@@ -88,6 +94,14 @@ namespace Scenes.DevScenes.Peter_Test.SpawningScene
             
             JobHandle findNearestBlueHandle = findBlueTargetsJob.Schedule(RedPositions.Length, 100);
             findNearestBlueHandle.Complete();
+            
+            index = 0;
+            foreach (var archer in SystemAPI.Query<RefRW<Main_Scene.Archer>>().WithAll<BlueTag>())
+            {
+                archer.ValueRW.TargetPosition = NearestTargetPositions[index];
+                
+                index++;
+            }
             
             for (int i = 0; i < BluePositions.Length; i++)
             {
