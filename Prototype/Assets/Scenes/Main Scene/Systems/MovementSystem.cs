@@ -31,7 +31,7 @@ namespace Scenes.Main_Scene
             {
                 if (physicsMass.ValueRO.Alive)
                 {
-                    archerVelocity.ValueRW.Linear[0] = 1;
+                    archerVelocity.ValueRW.Linear[2] = -1;
                 }
             }
         }

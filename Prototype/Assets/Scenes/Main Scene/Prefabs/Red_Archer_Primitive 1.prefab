@@ -498,6 +498,11 @@ MonoBehaviour:
   ProjectilePrefab: {fileID: 7663648698074745913, guid: c53e3c3afab08a845b5c4a9907127273,
     type: 3}
   SpawnPoint: {fileID: 7474084893951801673}
+  Aimer: {fileID: 6528630830202009727}
+  TargetPosition:
+    x: 0
+    y: 0
+    z: 0
   Strength: 20
 --- !u!1 &6505819971168808030
 GameObject:

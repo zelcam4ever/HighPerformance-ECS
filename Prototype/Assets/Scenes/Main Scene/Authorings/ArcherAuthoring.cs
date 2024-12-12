@@ -1,4 +1,5 @@
 using Unity.Entities;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace Scenes.Main_Scene
@@ -7,6 +8,8 @@ namespace Scenes.Main_Scene
     {
         public GameObject ProjectilePrefab;
         public Transform SpawnPoint;
+        public Transform Aimer;
+        public float3 TargetPosition;
         public float Strength;
     }
 
@@ -20,6 +23,8 @@ namespace Scenes.Main_Scene
             {
                 ProjectilePrefab = GetEntity(authoring.ProjectilePrefab, TransformUsageFlags.Dynamic),
                 SpawnPoint = GetEntity(authoring.SpawnPoint, TransformUsageFlags.Dynamic),
+                TargetPosition = authoring.TargetPosition,
+                Aimer = GetEntity(authoring.Aimer, TransformUsageFlags.Dynamic),
                 Strength = authoring.Strength
             });
             AddComponent<IsAlive>(entity);
@@ -32,6 +37,8 @@ namespace Scenes.Main_Scene
     {
         public Entity ProjectilePrefab;
         public Entity SpawnPoint;
+        public Entity Aimer;
+        public float3 TargetPosition;
         public float Strength;
     }
     
