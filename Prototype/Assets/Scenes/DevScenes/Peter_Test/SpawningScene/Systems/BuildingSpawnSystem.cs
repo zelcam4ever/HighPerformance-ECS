@@ -1,23 +1,40 @@
 using Unity.Burst;
 using Unity.Entities;
+using Unity.Mathematics;
+using Unity.Transforms;
+using Unity.Physics;
+using Unity.Physics.Authoring;
 
-partial struct BuildingSpawnSystem : ISystem
+namespace Scenes.DevScenes.Peter_Test.SpawningScene
 {
-    [BurstCompile]
-    public void OnCreate(ref SystemState state)
+    partial struct BuildingSpawnSystem : ISystem
     {
-        
-    }
+        [BurstCompile]
+        public void OnCreate(ref SystemState state)
+        {
+            state.RequireForUpdate<Config>();
+            state.RequireForUpdate<SpawnBuildings>();
+        }
 
-    [BurstCompile]
-    public void OnUpdate(ref SystemState state)
-    {
-        
-    }
+        [BurstCompile]
+        public void OnUpdate(ref SystemState state)
+        {
+            state.Enabled = false;
+            var config = SystemAPI.GetSingleton<Config>();
 
-    [BurstCompile]
-    public void OnDestroy(ref SystemState state)
-    {
-        
+            for (int i = 0; i < 1; i++)
+            {
+
+                float3 position = new float3(0, 100, 1000 * i);
+
+                var wallInstance = state.EntityManager.Instantiate(config.WallPrefab);
+                state.EntityManager.SetComponentData(wallInstance, new LocalTransform
+                {
+                    Position = position,
+                    Rotation = quaternion.identity,
+                    Scale = 1.0f
+                });
+            }
+        }
     }
 }

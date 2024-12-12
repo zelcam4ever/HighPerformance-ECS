@@ -13,6 +13,7 @@ namespace Scenes.DevScenes.Peter_Test.SpawningScene
         public void OnCreate(ref SystemState state)
         {
             state.RequireForUpdate<Config>();
+            
         }
 
         [BurstCompile]
@@ -21,11 +22,10 @@ namespace Scenes.DevScenes.Peter_Test.SpawningScene
             state.Enabled = false;
             
             var config = SystemAPI.GetSingleton<Config>();
-
             
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 50; i++)
             {
-                float3 position = new float3(500 + 10*i, 50, 15 -3*i);
+                float3 position = new float3(400, 50, 10*i);
                 
                 var boulderInstance = state.EntityManager.Instantiate(config.BigBoulderPrefab);
                 state.EntityManager.SetComponentData(boulderInstance, new LocalTransform

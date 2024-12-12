@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 486808689964085186}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 115.21944, y: -85.8143, z: 76.38588}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -100,11 +100,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MotionType: 0
   m_Smoothing: 0
-  m_Mass: 10000
+  m_Mass: 10000000
   m_LinearDamping: 0.01
   m_AngularDamping: 0.05
   m_InitialLinearVelocity:
-    x: -40
+    x: -80
     y: -10
     z: 0
   m_InitialAngularVelocity:

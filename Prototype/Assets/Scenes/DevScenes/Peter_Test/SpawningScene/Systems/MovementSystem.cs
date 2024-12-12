@@ -1,42 +1,33 @@
+using Scenes.Main_Scene;
 using Unity.Burst;
-using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
-using Unity.Physics;
 using Unity.Transforms;
-using Unity.VisualScripting.FullSerializer;
-using UnityEngine;
+using RedTag = Scenes.DevScenes.Peter_Test.SpawningScene.RedTag;
 
 namespace Scenes.DevScenes.Peter_Test.SpawningScene
 {
-    [UpdateAfter(typeof(SetPhysicsMassBehaviourSystem))]
     partial struct MovementSystem : ISystem
     {
-        // private uint startseed;
-        // private Random rng;
-        
         [BurstCompile]
         public void OnCreate(ref SystemState state)
         {
             state.RequireForUpdate<Config>();
-            // startseed = 1;
-            // rng = new Random(startseed);
         }
 
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
-            //state.Enabled = false;
-            foreach (var (archerVelocity, physicsMass)  in SystemAPI.Query<RefRW<PhysicsVelocity>,RefRO<SetPhysicsMass>>().WithAll<RedTag>())
+            var config = SystemAPI.GetSingleton<Config>();
+            switch (config.SchedulingType)
             {
-                if (physicsMass.ValueRO.Alive)
-                {
-                    archerVelocity.ValueRW.Linear[0] = 1;
-                }
-                else
-                {
-                    archerVelocity.ValueRW.Linear[0] = archerVelocity.ValueRW.Linear[0];
-                }
+                case SchedulingType.Schedule:
+                    state.Dependency = new MovementJob{dt = SystemAPI.Time.DeltaTime}.Schedule(state.Dependency);
+                    break;
+                
+                case SchedulingType.ScheduleParallel:
+                    state.Dependency = new MovementJob{dt = SystemAPI.Time.DeltaTime}.ScheduleParallel(state.Dependency);
+                    break;
             }
         }
 
@@ -44,5 +35,15 @@ namespace Scenes.DevScenes.Peter_Test.SpawningScene
         public void OnDestroy(ref SystemState state)
         {
         }
+    }
+}
+[BurstCompile]
+[WithAll(typeof(RedTag), typeof(IsAlive))]
+public partial struct MovementJob : IJobEntity
+{
+    public float dt;
+    void Execute(ref LocalTransform transform)
+    {
+        transform.Position += new float3(-1 * dt, 0, 0);
     }
 }

@@ -5,6 +5,7 @@ using Unity.Collections;
 using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Physics;
+using Unity.Entities;
 using Unity.Physics.Systems;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -25,6 +26,7 @@ partial struct CollideSystem : ISystem
             PhysicsMassData = SystemAPI.GetComponentLookup<PhysicsMass>(),
         }.Schedule(SystemAPI.GetSingleton<SimulationSingleton>(), state.Dependency);
         triggerJob.Complete();
+        
     }
 
     [BurstCompile]

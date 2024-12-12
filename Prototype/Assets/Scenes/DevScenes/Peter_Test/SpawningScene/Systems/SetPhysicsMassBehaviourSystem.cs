@@ -8,7 +8,7 @@ namespace Scenes.DevScenes.Peter_Test.SpawningScene
     [UpdateAfter(typeof(RigidbodyBakingSystem))]
     [UpdateAfter(typeof(EndJointBakingSystem))]
     [WorldSystemFilter(WorldSystemFilterFlags.BakingSystem)]
-    [UpdateAfter(typeof(ArcherSpawningSystem))]
+    //[UpdateAfter(typeof(ArcherSpawningSystem))]
     public partial struct SetPhysicsMassBehaviourSystem : ISystem
     {
         public void OnUpdate(ref SystemState state)
@@ -18,12 +18,9 @@ namespace Scenes.DevScenes.Peter_Test.SpawningScene
                      in SystemAPI.Query<RefRW<PhysicsMass>, RefRO<SetPhysicsMass>>()
                          .WithOptions(EntityQueryOptions.IncludePrefab | EntityQueryOptions.IncludeDisabledEntities))
             {
-                mass.ValueRW.InverseInertia[0] =
-                    setPhysicsMass.ValueRO.InfiniteInertiaX ? 0 : setPhysicsMass.ValueRO.BaselineInertiaX;
-                mass.ValueRW.InverseInertia[1] =
-                    setPhysicsMass.ValueRO.InfiniteInertiaY ? 0 : setPhysicsMass.ValueRO.BaselineInertiaY;
-                mass.ValueRW.InverseInertia[2] =
-                    setPhysicsMass.ValueRO.InfiniteInertiaZ ? 0 : setPhysicsMass.ValueRO.BaselineInertiaZ;
+                mass.ValueRW.InverseInertia[0] = setPhysicsMass.ValueRO.InfiniteInertiaX ? 0 : setPhysicsMass.ValueRO.BaselineInertiaX;
+                mass.ValueRW.InverseInertia[1] = setPhysicsMass.ValueRO.InfiniteInertiaY ? 0 : setPhysicsMass.ValueRO.BaselineInertiaY;
+                mass.ValueRW.InverseInertia[2] = setPhysicsMass.ValueRO.InfiniteInertiaZ ? 0 : setPhysicsMass.ValueRO.BaselineInertiaZ;
                 mass.ValueRW.InverseMass = setPhysicsMass.ValueRO.InfiniteMass ? 0 : mass.ValueRW.InverseMass;
             }
         }
