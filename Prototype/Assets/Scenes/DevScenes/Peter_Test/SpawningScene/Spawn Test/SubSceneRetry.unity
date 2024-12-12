@@ -441,7 +441,7 @@ MonoBehaviour:
     type: 3}
   BigBoulderPrefab: {fileID: 486808689964085186, guid: 92ccaf67d682a5e47a60327fc2b4b7ae,
     type: 3}
-  WallPrefab: {fileID: 6122087690586230314, guid: f3cb9982c44f66644b8d7d547557a412,
+  WallPrefab: {fileID: 817327282063867142, guid: ca475fc0a8ce4f34a9c9ccdc33a54f36,
     type: 3}
   RedArcherCount: 100
   BlueArcherCount: 100
