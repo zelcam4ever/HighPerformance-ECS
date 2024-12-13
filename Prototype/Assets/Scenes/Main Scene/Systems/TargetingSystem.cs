@@ -17,7 +17,6 @@ namespace Scenes.Main_Scene
         public void OnCreate(ref SystemState state)
         {
             state.RequireForUpdate<Config>();
-            //var config = SystemAPI.GetSingleton<Config>();
         }
         
         [BurstCompile]
@@ -48,18 +47,16 @@ namespace Scenes.Main_Scene
             
             
             int count = 0;
-            foreach (var archerTransform in SystemAPI.Query<RefRO<LocalTransform>>().WithAll<RedTag>())
+            foreach (var archerTransform in SystemAPI.Query<RefRO<LocalTransform>>().WithAll<RedTag, IsAlive>())
             {
                 RedPositions[count] = archerTransform.ValueRO.Position;
-                //Debug.Log("Red:" + RedPositions[count]);
                 count++;
             }
 
             count = 0;
-            foreach (var archerTransform in SystemAPI.Query<RefRO<LocalTransform>>().WithAll<BlueTag>())
+            foreach (var archerTransform in SystemAPI.Query<RefRO<LocalTransform>>().WithAll<BlueTag, IsAlive>())
             {
                 BluePositions[count] = archerTransform.ValueRO.Position;
-                //Debug.Log("Blue:" + BluePositions[count]);
                 count++;
             }
         
@@ -74,7 +71,7 @@ namespace Scenes.Main_Scene
             findNearestRedHandle.Complete();
             
             int index = 0;
-            foreach (var archer in SystemAPI.Query<RefRW<Archer>,RefRO<LocalTransform>>().WithAll<RedTag>())
+            foreach (var archer in SystemAPI.Query<RefRW<Archer>,RefRO<LocalTransform>>().WithAll<RedTag, IsAlive>())
             {
                 archer.Item1.ValueRW.TargetPosition = NearestTargetPositions[index];
                 Debug.DrawLine(archer.Item2.ValueRO.Position, NearestTargetPositions[index], Color.red);
@@ -91,17 +88,12 @@ namespace Scenes.Main_Scene
             JobHandle findNearestBlueHandle = findBlueTargetsJob.Schedule(RedPositions.Length, 100);
             findNearestBlueHandle.Complete();
             index = 0;
-            foreach (var archer in SystemAPI.Query<RefRW<Archer>,RefRO<LocalTransform>>().WithAll<BlueTag>())
+            foreach (var archer in SystemAPI.Query<RefRW<Archer>,RefRO<LocalTransform>>().WithAll<BlueTag, IsAlive>())
             {
                 archer.Item1.ValueRW.TargetPosition = NearestTargetPositions[index];
                 Debug.DrawLine(archer.Item2.ValueRO.Position, NearestTargetPositions[index], Color.blue);
                 index++;
             };
-            
-            
-            RedPositions.Dispose();
-            BluePositions.Dispose();
-            NearestTargetPositions.Dispose();
         }
         
         [BurstCompile]

@@ -28,7 +28,7 @@ namespace Scenes.DevScenes.Peter_Test.SpawningScene
                     targetPos = potentialTargetPos; 
                 }
             }
-            Debug.DrawLine(blueTransform.Position, targetPos);
+            Debug.DrawLine(blueTransform.Position, targetPos, Color.blue, duration: 2);
         }
     }
 }

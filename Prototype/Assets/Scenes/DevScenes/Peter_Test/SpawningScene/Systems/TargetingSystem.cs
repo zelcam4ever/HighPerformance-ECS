@@ -73,18 +73,18 @@ namespace Scenes.DevScenes.Peter_Test.SpawningScene
             {
                 switch (config.SchedulingType)
                 {
-                    case SchedulingType.Schedule:
+                    case SchedulingType.ScheduleParallel:
                         state.Dependency = new FindNearestRed
                         {
-                            RedPositions = RedPositions,
-                        }.Schedule(state.Dependency);
+                            RedPositions = RedPositions
+                        }.ScheduleParallel(state.Dependency);
                         state.Dependency = new FindNearestBlue
                         {
-                            BluePositions = BluePositions,
-                        }.Schedule(state.Dependency);
+                            BluePositions = BluePositions
+                        }.ScheduleParallel(state.Dependency);
                         break;
 
-                    case SchedulingType.ScheduleParallel:
+                    case SchedulingType.Schedule:
                         FindNearestJob findRedTargetsJob = new FindNearestJob
                         {
                             RedPositions = RedPositions,
@@ -92,7 +92,7 @@ namespace Scenes.DevScenes.Peter_Test.SpawningScene
                             NearestTargetPositions = NearestTargetPositions
                         };
                         
-                        JobHandle findNearestRedHandle = findRedTargetsJob.Schedule(RedPositions.Length, 64);
+                        JobHandle findNearestRedHandle = findRedTargetsJob.Schedule(RedPositions.Length, 1000);
                         findNearestRedHandle.Complete();
                         
                         FindNearestJob findBlueTargetsJob = new FindNearestJob
@@ -102,7 +102,7 @@ namespace Scenes.DevScenes.Peter_Test.SpawningScene
                             NearestTargetPositions = NearestTargetPositions
                         };
                         
-                        JobHandle findNearestBlueHandle = findBlueTargetsJob.Schedule(RedPositions.Length, 64);
+                        JobHandle findNearestBlueHandle = findBlueTargetsJob.Schedule(RedPositions.Length, 1000);
                         findNearestBlueHandle.Complete();
                         // state.Dependency = new FindNearestRed
                         // {
@@ -118,14 +118,19 @@ namespace Scenes.DevScenes.Peter_Test.SpawningScene
                 
                 elapsedTime = SystemAPI.Time.ElapsedTime;
             }
-            // for (int i = 0; i < RedPositions.Length; i++)
-            // {
-            //     Debug.DrawLine(RedPositions[i], NearestTargetPositions[i]);
-            // }
-            // for (int i = 0; i < BluePositions.Length; i++)
-            // {
-            //     Debug.DrawLine(BluePositions[i], NearestTargetPositions[i]);
-            // }
+
+            if (config.SchedulingType == SchedulingType.Schedule)
+            {
+                for (int i = 0; i < RedPositions.Length; i++)
+                {
+                    Debug.DrawLine(RedPositions[i], NearestTargetPositions[i]);
+                }
+
+                for (int i = 0; i < BluePositions.Length; i++)
+                {
+                    Debug.DrawLine(BluePositions[i], NearestTargetPositions[i]);
+                }
+            }
             // if (RedPositions.IsCreated)
             // {
             //     RedPositions.Dispose();

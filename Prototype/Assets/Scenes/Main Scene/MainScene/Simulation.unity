@@ -474,7 +474,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpawnArchers: 1
   ArcherShooting: 1
-  ArrowPhysics: 0
+  ArrowPhysics: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

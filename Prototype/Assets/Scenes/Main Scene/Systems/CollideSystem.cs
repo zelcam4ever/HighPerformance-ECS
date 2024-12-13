@@ -13,19 +13,20 @@ namespace Scenes.Main_Scene
 {
     partial struct CollideSystem : ISystem
     {
-
-
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
-            var triggerJob = new TriggerJob
+            RefRW<EndSimulationEntityCommandBufferSystem.Singleton> ecb = SystemAPI.GetSingletonRW<EndSimulationEntityCommandBufferSystem.Singleton>();
+            
+            var killArcherJob = new KillArcherJob
             {
+                ecb = ecb.ValueRW.CreateCommandBuffer(state.WorldUnmanaged),
                 allBoulders = SystemAPI.GetComponentLookup<BoulderTag>(true),
                 allProjectiles = SystemAPI.GetComponentLookup<ProjectileTag>(true),
                 allMasses = SystemAPI.GetComponentLookup<SetPhysicsMass>(),
                 PhysicsMassData = SystemAPI.GetComponentLookup<PhysicsMass>(),
             }.Schedule(SystemAPI.GetSingleton<SimulationSingleton>(), state.Dependency);
-            triggerJob.Complete();
+            killArcherJob.Complete();
         }
 
         [BurstCompile]
@@ -36,12 +37,13 @@ namespace Scenes.Main_Scene
     }
 
     [BurstCompile]
-    struct TriggerJob : ICollisionEventsJob
+    struct KillArcherJob : ICollisionEventsJob
     {
         [ReadOnly] public ComponentLookup<BoulderTag> allBoulders;
         [ReadOnly] public ComponentLookup<ProjectileTag> allProjectiles;
         public ComponentLookup<SetPhysicsMass> allMasses;
         public ComponentLookup<PhysicsMass> PhysicsMassData;
+        public EntityCommandBuffer ecb;
 
         public void Execute(CollisionEvent collisionEvent)
         {
@@ -59,6 +61,7 @@ namespace Scenes.Main_Scene
                 massComponent.InfiniteInertiaX = false;
                 massComponent.InfiniteInertiaZ = false;
                 allMasses[entityB] = massComponent;
+                ecb.RemoveComponent<IsAlive>(entityB);
             }
 
             else if ((allBoulders.HasComponent(entityB) || allProjectiles.HasComponent(entityB)) && allMasses.HasComponent(entityA))
@@ -72,6 +75,7 @@ namespace Scenes.Main_Scene
                 massComponent.InfiniteInertiaX = false;
                 massComponent.InfiniteInertiaZ = false;
                 allMasses[entityA] = massComponent;
+                ecb.RemoveComponent<IsAlive>(entityA);
             }
         }
     }

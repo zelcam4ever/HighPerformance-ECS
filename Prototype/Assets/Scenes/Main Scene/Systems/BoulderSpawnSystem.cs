@@ -23,7 +23,7 @@ namespace Scenes.Main_Scene
             var config = SystemAPI.GetSingleton<Config>();
 
             
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 10; i++)
             {
                 float3 position = new float3(500 + 10*i, 50, 15 -3*i);
                 
