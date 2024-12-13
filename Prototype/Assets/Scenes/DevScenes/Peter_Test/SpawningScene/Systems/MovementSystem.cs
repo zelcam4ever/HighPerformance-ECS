@@ -36,14 +36,14 @@ namespace Scenes.DevScenes.Peter_Test.SpawningScene
         {
         }
     }
-}
-[BurstCompile]
-[WithAll(typeof(RedTag), typeof(IsAlive))]
-public partial struct MovementJob : IJobEntity
-{
-    public float dt;
-    void Execute(ref LocalTransform transform)
+    [BurstCompile]
+    [WithAll(typeof(RedTag), typeof(IsAlive))]
+    public partial struct MovementJob : IJobEntity
     {
-        transform.Position += new float3(-1 * dt, 0, 0);
+        public float dt;
+        void Execute(ref LocalTransform transform)
+        {
+            transform.Position += new float3(-1 * dt, 0, 0);
+        }
     }
 }
