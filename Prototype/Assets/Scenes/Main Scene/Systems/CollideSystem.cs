@@ -50,7 +50,7 @@ namespace Scenes.Main_Scene
             Entity entityA = collisionEvent.EntityA;
             Entity entityB = collisionEvent.EntityB;
 
-            if ((allBoulders.HasComponent(entityA) || allProjectiles.HasComponent(entityA)) && allMasses.HasComponent(entityB))
+            if (allBoulders.HasComponent(entityA) && allMasses.HasComponent(entityB))
             {
                 var massComponent = allMasses[entityB];
                 var inertiaComponent = PhysicsMassData[entityB];
@@ -64,7 +64,7 @@ namespace Scenes.Main_Scene
                 ecb.RemoveComponent<IsAlive>(entityB);
             }
 
-            else if ((allBoulders.HasComponent(entityB) || allProjectiles.HasComponent(entityB)) && allMasses.HasComponent(entityA))
+            else if (allBoulders.HasComponent(entityB) && allMasses.HasComponent(entityA))
             {
                 var massComponent = allMasses[entityA];
                 var inertiaComponent = PhysicsMassData[entityA];
@@ -76,6 +76,35 @@ namespace Scenes.Main_Scene
                 massComponent.InfiniteInertiaZ = false;
                 allMasses[entityA] = massComponent;
                 ecb.RemoveComponent<IsAlive>(entityA);
+            }
+            
+            else if (allProjectiles.HasComponent(entityA) && allMasses.HasComponent(entityB))
+            {
+                var massComponent = allMasses[entityB];
+                var inertiaComponent = PhysicsMassData[entityB];
+                inertiaComponent.InverseInertia = new float3(massComponent.BaselineInertiaX,
+                    massComponent.BaselineInertiaY, massComponent.BaselineInertiaZ);
+                PhysicsMassData[entityB] = inertiaComponent;
+                massComponent.Alive = false;
+                massComponent.InfiniteInertiaX = false;
+                massComponent.InfiniteInertiaZ = false;
+                allMasses[entityB] = massComponent;
+                ecb.RemoveComponent<IsAlive>(entityB);
+                ecb.DestroyEntity(entityA); //can consider this, it removes a bullet if it kills an archer
+            }
+            else if (allProjectiles.HasComponent(entityB) && allMasses.HasComponent(entityA))
+            {
+                var massComponent = allMasses[entityA];
+                var inertiaComponent = PhysicsMassData[entityA];
+                inertiaComponent.InverseInertia = new float3(massComponent.BaselineInertiaX,
+                    massComponent.BaselineInertiaY, massComponent.BaselineInertiaZ);
+                PhysicsMassData[entityA] = inertiaComponent;
+                massComponent.Alive = false;
+                massComponent.InfiniteInertiaX = false;
+                massComponent.InfiniteInertiaZ = false;
+                allMasses[entityA] = massComponent;
+                ecb.RemoveComponent<IsAlive>(entityA);
+                ecb.DestroyEntity(entityB);
             }
         }
     }

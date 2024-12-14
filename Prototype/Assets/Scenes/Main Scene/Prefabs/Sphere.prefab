@@ -104,8 +104,8 @@ MonoBehaviour:
   m_LinearDamping: 0.01
   m_AngularDamping: 0.05
   m_InitialLinearVelocity:
-    x: -40
-    y: -10
+    x: 0
+    y: -20
     z: 0
   m_InitialAngularVelocity:
     x: 0

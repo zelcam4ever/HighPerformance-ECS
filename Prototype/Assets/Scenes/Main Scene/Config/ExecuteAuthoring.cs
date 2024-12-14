@@ -5,10 +5,10 @@ namespace Scenes.Main_Scene
 {
     class ExecuteAuthoring : MonoBehaviour
     {
-        [Header("Spawn Archers (press G to spawn)")] public bool SpawnArchers;
+        [Header("Spawn Archers")] public bool SpawnArchers;
+        [Header("Spawn Boulders")] public bool SpawnBoulders;
         [Header("Allow Archers to shoot")] public bool ArcherShooting;
         [Header("Arrow Physics")] public bool ArrowPhysics;
-
     }
 
     class ExecuteAuthoringBaker : Baker<ExecuteAuthoring>
@@ -19,10 +19,12 @@ namespace Scenes.Main_Scene
             if(authoring.SpawnArchers) AddComponent<SpawnArchers>(entity);
             if(authoring.ArcherShooting) AddComponent<ArcherShooting>(entity);
             if(authoring.ArrowPhysics) AddComponent<ArrowPhysics>(entity);
+            if(authoring.SpawnBoulders) AddComponent<SpawnBoulders>(entity);
         }
     }
     
     public struct SpawnArchers : IComponentData {}
     public struct ArcherShooting : IComponentData {}
     public struct ArrowPhysics : IComponentData {}
+    public struct SpawnBoulders : IComponentData {}
 }

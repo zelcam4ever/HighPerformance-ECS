@@ -13,6 +13,7 @@ namespace Scenes.Main_Scene
         public void OnCreate(ref SystemState state)
         {
             state.RequireForUpdate<Config>();
+            state.RequireForUpdate<SpawnBoulders>();
         }
 
         [BurstCompile]
@@ -25,7 +26,7 @@ namespace Scenes.Main_Scene
             
             for (int i = 0; i < 10; i++)
             {
-                float3 position = new float3(500 + 10*i, 50, 15 -3*i);
+                float3 position = new float3(140, 150, -10 * i);
                 
                 var boulderInstance = state.EntityManager.Instantiate(config.BigBoulderPrefab);
                 state.EntityManager.SetComponentData(boulderInstance, new LocalTransform
