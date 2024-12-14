@@ -1471,7 +1471,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96a3769a250f3024e936591e589cea3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpawnArchers: 0
+  SpawnArchers: 1
   SpawnBoulders: 0
   ArcherShooting: 1
   ArrowPhysics: 1

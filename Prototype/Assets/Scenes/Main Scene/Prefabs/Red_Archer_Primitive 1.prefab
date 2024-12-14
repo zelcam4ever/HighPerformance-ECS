@@ -503,7 +503,7 @@ MonoBehaviour:
     x: 0
     y: 0
     z: 0
-  Strength: 15
+  Strength: 20
 --- !u!1 &6505819971168808030
 GameObject:
   m_ObjectHideFlags: 0
