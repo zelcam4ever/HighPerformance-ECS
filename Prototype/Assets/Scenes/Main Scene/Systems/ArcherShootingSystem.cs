@@ -16,6 +16,7 @@ namespace Scenes.Main_Scene
     {
         private ComponentLookup<LocalTransform> _localTransformLookup;
         private ComponentLookup<LocalToWorld> _localToWorldLookup;
+        double elapsedTime;
         
         [BurstCompile]
         public void OnCreate(ref SystemState state)
@@ -23,6 +24,7 @@ namespace Scenes.Main_Scene
             state.RequireForUpdate<ArcherShooting>();
             _localTransformLookup = state.GetComponentLookup<LocalTransform>(true);
             _localToWorldLookup = state.GetComponentLookup<LocalToWorld>(true); // Set as ReadOnly
+            elapsedTime = SystemAPI.Time.ElapsedTime;
         }
             
         [BurstCompile]
@@ -36,13 +38,16 @@ namespace Scenes.Main_Scene
             var ecbSingleton = SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>();
             
             // Schedule the shooting job
-            state.Dependency = new ShootingJob
+            if (SystemAPI.Time.ElapsedTime - elapsedTime > 1.5)
             {
-                CurrentFrame = currentFrame,
-                ECB = ecbSingleton.CreateCommandBuffer(state.WorldUnmanaged).AsParallelWriter(),
-                LocalTransformLookup = _localTransformLookup,
-                LocalToWorldLookup = _localToWorldLookup
-            }.ScheduleParallel(state.Dependency);
+                state.Dependency = new ShootingJob
+                {
+                    ECB = ecbSingleton.CreateCommandBuffer(state.WorldUnmanaged).AsParallelWriter(),
+                    LocalTransformLookup = _localTransformLookup,
+                    LocalToWorldLookup = _localToWorldLookup
+                }.ScheduleParallel(state.Dependency);
+                elapsedTime = SystemAPI.Time.ElapsedTime;
+            }
         }
         
         [BurstCompile]
@@ -93,7 +98,7 @@ namespace Scenes.Main_Scene
                 aimer.Rotation = aimRotation;
                 
                 // Move outside job?
-                if (CurrentFrame % (60 * 5) != 0) return;
+                // if (CurrentFrame % (60 * 5) != 0) return;
 
                 // Get the spawn point and projectile prefab
                 // Get the spawn point's LocalToWorld
