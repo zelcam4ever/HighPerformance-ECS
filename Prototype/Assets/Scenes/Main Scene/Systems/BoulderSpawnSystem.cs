@@ -26,7 +26,7 @@ namespace Scenes.Main_Scene
             
             for (int i = 0; i < 10; i++)
             {
-                float3 position = new float3(140, 150, 5 -10 * i);
+                float3 position = new float3(140, 150 + 50*i, 5 -10 * i);
                 
                 var boulderInstance = state.EntityManager.Instantiate(config.BigBoulderPrefab);
                 state.EntityManager.SetComponentData(boulderInstance, new LocalTransform
