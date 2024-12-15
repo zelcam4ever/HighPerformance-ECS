@@ -24,8 +24,8 @@ namespace Scenes.Main_Scene
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
-            if (SystemAPI.Time.ElapsedTime - elapsedTime > 2.0f)
-            {
+           // if (SystemAPI.Time.ElapsedTime - elapsedTime > 2.0f)
+            //{
                 var config = SystemAPI.GetSingleton<Config>();
                 // It seems wasteful to me that we allocate new space for the native arrays on every frame, but I have tried
                 // with the persistent allocator as well in an (if IsCreated) statement and the performance is identical? Return later
@@ -79,7 +79,8 @@ namespace Scenes.Main_Scene
                              .WithAll<RedTag, IsAlive>())
                 {
                     archer.Item1.ValueRW.TargetPosition = NearestTargetPositions[index];
-                    Debug.DrawLine(archer.Item2.ValueRO.Position, NearestTargetPositions[index], Color.red, duration: 2.0f);
+                    if(config.EnableTargetingDebug)
+                        Debug.DrawLine(archer.Item2.ValueRO.Position, NearestTargetPositions[index], Color.red, duration: 2.0f);
                     index++;
                 }
 
@@ -99,7 +100,8 @@ namespace Scenes.Main_Scene
                              .WithAll<BlueTag, IsAlive>())
                 {
                     archer.Item1.ValueRW.TargetPosition = NearestTargetPositions[index];
-                    Debug.DrawLine(archer.Item2.ValueRO.Position, NearestTargetPositions[index], Color.blue, duration: 2.0f);
+                    if(config.EnableTargetingDebug)
+                        Debug.DrawLine(archer.Item2.ValueRO.Position, NearestTargetPositions[index], Color.blue, duration: 2.0f);
                     index++;
                 };
 
@@ -111,7 +113,7 @@ namespace Scenes.Main_Scene
                     BluePositions.Dispose();
                     NearestTargetPositions.Dispose();
                 }
-            }
+           // }
         }
         
         [BurstCompile]

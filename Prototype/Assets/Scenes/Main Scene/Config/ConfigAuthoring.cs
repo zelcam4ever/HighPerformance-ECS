@@ -14,6 +14,7 @@ namespace Scenes.Main_Scene
         public int BlueArcherCount;
         public BattleSize BattleSize;
         public SchedulingType SchedulingType;
+        public bool EnableTargetingDebug;
         
     }
 
@@ -48,7 +49,8 @@ namespace Scenes.Main_Scene
                 RedArcherCount = authoring.RedArcherCount,
                 BlueArcherCount = authoring.BlueArcherCount,
                 SchedulingType = authoring.SchedulingType,
-                BattleSize = authoring.BattleSize, 
+                BattleSize = authoring.BattleSize,
+                EnableTargetingDebug = authoring.EnableTargetingDebug,
                 // RedPositions = new NativeArray<float3>(armySize, Allocator.Persistent),
                 // BluePositions = new NativeArray<float3>(armySize, Allocator.Persistent),
                 // NearestTargetPositions = new NativeArray<float3>(armySize, Allocator.Persistent),
@@ -67,6 +69,7 @@ namespace Scenes.Main_Scene
         public int BlueArcherCount;
         public SchedulingType SchedulingType;
         public BattleSize BattleSize;
+        public bool EnableTargetingDebug;
         // public NativeArray<float3> RedPositions;
         // public NativeArray<float3> BluePositions;
         // public NativeArray<float3> NearestTargetPositions;
