@@ -53,11 +53,8 @@ namespace Scenes.Main_Scene
             [ReadOnly] public ComponentLookup<LocalTransform> LocalTransformLookup;
             [ReadOnly] public ComponentLookup<LocalToWorld> LocalToWorldLookup;
 
-            public void Execute(Entity entity, [EntityIndexInQuery] int entityInQueryIndex, in Archer archer,  in SetPhysicsMass physicsMass)
+            public void Execute([ChunkIndexInQuery] int entityInQueryIndex, in Archer archer,  in IsAlive isAlive)
             {
-                if (!physicsMass.Alive)
-                    return;
-                
                 const float g = 9.8f;
                 
                 if (!LocalTransformLookup.TryGetComponent(archer.Aimer, out var aimer))

@@ -22,10 +22,10 @@ namespace Scenes.DevScenes.Peter_Test.SpawningScene
             state.Enabled = false;
             var config = SystemAPI.GetSingleton<Config>();
 
-            for (int i = 0; i < 1; i++)
+            for (int i = 0; i < 100; i++)
             {
 
-                float3 position = new float3(0, 100, 1000 * i);
+                float3 position = new float3(0, 10, 3 * i);
 
                 var wallInstance = state.EntityManager.Instantiate(config.WallPrefab);
                 state.EntityManager.SetComponentData(wallInstance, new LocalTransform
@@ -35,6 +35,11 @@ namespace Scenes.DevScenes.Peter_Test.SpawningScene
                     Scale = 1.0f
                 });
             }
+        }
+        [BurstCompile]
+        public void OnDestroy(ref SystemState state)
+        {
+
         }
     }
 }

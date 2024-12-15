@@ -414,7 +414,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MotionType: 0
   m_Smoothing: 0
-  m_Mass: 1
+  m_Mass: 5
   m_LinearDamping: 0.01
   m_AngularDamping: 0.05
   m_InitialLinearVelocity:
@@ -495,7 +495,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78c261a622d138b409a0957ddcb01ddd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ProjectilePrefab: {fileID: 7663648698074745913, guid: c53e3c3afab08a845b5c4a9907127273,
+  ProjectilePrefab: {fileID: 7663648698074745913, guid: 1cb8150facf965348a66bbb613f8b9f9,
     type: 3}
   SpawnPoint: {fileID: 7474084893951801673}
   Aimer: {fileID: 6528630830202009727}

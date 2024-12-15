@@ -1,10 +1,7 @@
-using Scenes.DevScenes.Lucas_Tests.SpawningScene.Systems;
 using Unity.Burst;
 using Unity.Collections;
-using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
-using UnityEngine;
 
 namespace Scenes.Main_Scene
 {
@@ -18,19 +15,21 @@ namespace Scenes.Main_Scene
         public void Execute(int index)
         {
             float3 redPos = RedPositions[index];
-            //Debug.Log("Red Pos" + redPos);
             float nearestDistSq = float.MaxValue;
+            float3 zeroVec = new float3(0, 0, 0);
+            
             for (int i = 0; i < BluePositions.Length; i++)
             {
                 float3 targetPos = BluePositions[i];
-                //Debug.Log("Blue Pos" + BluePositions[i]);
                 float distSq = math.distance(redPos, targetPos);
+                
                 if (distSq < nearestDistSq)
                 {
                     nearestDistSq = distSq;
-                    NearestTargetPositions[index] = targetPos;
-                    //Debug.Log("Target Pos" + NearestTargetPositions[index]);
-                    
+                    if (!targetPos.Equals(zeroVec))
+                    {
+                        NearestTargetPositions[index] = targetPos;
+                    }
                 }
             }
         }
