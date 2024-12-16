@@ -504,6 +504,8 @@ MonoBehaviour:
     y: 0
     z: 0
   Strength: 20
+  TimerReload: 4
+  CurrentTimeToShoot: 0
 --- !u!1 &6505819971168808030
 GameObject:
   m_ObjectHideFlags: 0

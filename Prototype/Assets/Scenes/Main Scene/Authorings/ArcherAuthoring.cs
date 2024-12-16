@@ -11,6 +11,8 @@ namespace Scenes.Main_Scene
         public Transform Aimer;
         public float3 TargetPosition;
         public float Strength;
+        public float TimerReload;
+        public float CurrentTimeToShoot;
     }
 
     class Baker : Baker<ArcherAuthoring>
@@ -25,7 +27,9 @@ namespace Scenes.Main_Scene
                 SpawnPoint = GetEntity(authoring.SpawnPoint, TransformUsageFlags.Dynamic),
                 TargetPosition = authoring.TargetPosition,
                 Aimer = GetEntity(authoring.Aimer, TransformUsageFlags.Dynamic),
-                Strength = authoring.Strength
+                Strength = authoring.Strength,
+                TimerReload = authoring.TimerReload,
+                CurrentTimeToShoot = 0
             });
             AddComponent<IsAlive>(entity);
         }
@@ -40,6 +44,8 @@ namespace Scenes.Main_Scene
         public Entity Aimer;
         public float3 TargetPosition;
         public float Strength;
+        public float TimerReload;
+        public float CurrentTimeToShoot;
     }
     
     public struct IsAlive :IComponentData {}
