@@ -19,38 +19,22 @@ namespace Scenes.Main_Scene
         {
             state.RequireForUpdate<Config>();
             elapsedTime = SystemAPI.Time.ElapsedTime;
+            RedPositions = new NativeArray<float3>(22500, Allocator.Persistent);
+            BluePositions = new NativeArray<float3>(22500, Allocator.Persistent);
+            NearestTargetPositions = new NativeArray<float3>(22500, Allocator.Persistent);
         }
         
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
-           if (SystemAPI.Time.ElapsedTime - elapsedTime > 2.0f)
+
+            if (SystemAPI.Time.ElapsedTime - elapsedTime > 2.0f)
             {
                 var config = SystemAPI.GetSingleton<Config>();
-                // It seems wasteful to me that we allocate new space for the native arrays on every frame, but I have tried
-                // with the persistent allocator as well in an (if IsCreated) statement and the performance is identical? Return later
-                // also there is most likely a much nicer way to do this...
-                switch (config.BattleSize)
-                {
-                    case BattleSize.Tens:
-                        RedPositions = new NativeArray<float3>(75, Allocator.TempJob);
-                        BluePositions = new NativeArray<float3>(75, Allocator.TempJob);
-                        NearestTargetPositions = new NativeArray<float3>(75, Allocator.TempJob);
-                        break;
-                    case BattleSize.Hundreds:
-                        RedPositions = new NativeArray<float3>(250, Allocator.TempJob);
-                        BluePositions = new NativeArray<float3>(250, Allocator.TempJob);
-                        NearestTargetPositions = new NativeArray<float3>(250, Allocator.TempJob);
-                        break;
-                    case BattleSize.Thousands:
-                        RedPositions = new NativeArray<float3>(2500, Allocator.TempJob);
-                        BluePositions = new NativeArray<float3>(2500, Allocator.TempJob);
-                        NearestTargetPositions = new NativeArray<float3>(2500, Allocator.TempJob);
-                        break;
-                }
+                
+                int redCount = 0;
 
-
-                int count = 0;
+           
                 foreach (var archerTransform in SystemAPI.Query<RefRO<LocalTransform>>().WithAll<RedTag, IsAlive>())
                 {
                     RedPositions[count] = archerTransform.ValueRO.Position;
@@ -106,13 +90,6 @@ namespace Scenes.Main_Scene
                 };
 
                 elapsedTime = SystemAPI.Time.ElapsedTime;
-                
-                if (RedPositions.IsCreated)
-                {
-                    RedPositions.Dispose();
-                    BluePositions.Dispose();
-                    NearestTargetPositions.Dispose();
-                }
             }
         }
         

@@ -1,5 +1,6 @@
 using Unity.Entities;
 using UnityEngine;
+using Unity.Mathematics;
 
 namespace Scenes.Main_Scene
 {
@@ -15,7 +16,6 @@ namespace Scenes.Main_Scene
         public BattleSize BattleSize;
         public SchedulingType SchedulingType;
         public bool EnableTargetingDebug;
-        
     }
 
     class ConfigAuthoringBaker : Baker<ConfigAuthoring>
@@ -52,7 +52,6 @@ namespace Scenes.Main_Scene
         public SchedulingType SchedulingType;
         public BattleSize BattleSize;
         public bool EnableTargetingDebug;
-
     }
     
 
