@@ -20,6 +20,7 @@ namespace Scenes.Main_Scene
         [BurstCompile]
         public void OnCreate(ref SystemState state)
         {
+            state.RequireForUpdate<Config>();
             state.RequireForUpdate<ArcherShooting>();
             _localTransformLookup = state.GetComponentLookup<LocalTransform>(true);
             _localToWorldLookup = state.GetComponentLookup<LocalToWorld>(true); // Set as ReadOnly
@@ -30,19 +31,35 @@ namespace Scenes.Main_Scene
         {
             _localTransformLookup.Update(ref state);
             _localToWorldLookup.Update(ref state);
+            var config = SystemAPI.GetSingleton<Config>();
             // Cache current frame count for this update
             int currentFrame = Time.frameCount;
 
             var ecbSingleton = SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>();
             
             // Schedule the shooting job
-            state.Dependency = new ShootingJob
+            switch (config.SchedulingType)
             {
-                CurrentFrame = currentFrame,
-                ECB = ecbSingleton.CreateCommandBuffer(state.WorldUnmanaged).AsParallelWriter(),
-                LocalTransformLookup = _localTransformLookup,
-                LocalToWorldLookup = _localToWorldLookup
-            }.ScheduleParallel(state.Dependency);
+                case SchedulingType.ScheduleParallel:
+                    state.Dependency = new ShootingJob
+                    {
+                        CurrentFrame = currentFrame,
+                        ECB = ecbSingleton.CreateCommandBuffer(state.WorldUnmanaged).AsParallelWriter(),
+                        LocalTransformLookup = _localTransformLookup,
+                        LocalToWorldLookup = _localToWorldLookup
+                    }.ScheduleParallel(state.Dependency);
+                    break;
+                
+                case SchedulingType.Schedule:
+                    state.Dependency = new ShootingJob
+                    {
+                        CurrentFrame = currentFrame,
+                        ECB = ecbSingleton.CreateCommandBuffer(state.WorldUnmanaged).AsParallelWriter(),
+                        LocalTransformLookup = _localTransformLookup,
+                        LocalToWorldLookup = _localToWorldLookup
+                    }.Schedule(state.Dependency);
+                    break;
+            }
         }
         
         [BurstCompile]

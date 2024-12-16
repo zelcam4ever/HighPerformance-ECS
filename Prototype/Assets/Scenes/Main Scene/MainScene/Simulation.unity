@@ -441,10 +441,10 @@ MonoBehaviour:
     type: 3}
   BigBoulderPrefab: {fileID: 486808689964085186, guid: d50ec84e75609ad468b5e7f0f112f243,
     type: 3}
-  RedArcherCount: 0
-  BlueArcherCount: 0
-  BattleSize: 2
+  BattleSize: 3
+  Soldiers: 45000
   SchedulingType: 1
+  EnableTargetingDebug: 0
 --- !u!4 &615043230
 Transform:
   m_ObjectHideFlags: 0
@@ -473,6 +473,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpawnArchers: 1
+  SpawnBoulders: 0
   ArcherShooting: 1
   ArrowPhysics: 1
 --- !u!1660057539 &9223372036854775807

@@ -10,6 +10,7 @@ namespace Scenes.DevScenes.Lucas_Tests.SpawningScene.Config
         public int ArcherCount;
         public int NumberOfBattalions;
         public int ArcherFormation;
+        
     }
 
     class ConfigAuthoringBaker : Baker<ConfigAuthoring>
@@ -22,7 +23,8 @@ namespace Scenes.DevScenes.Lucas_Tests.SpawningScene.Config
                 ArcherPrefab = GetEntity(authoring.ArcherPrefab, TransformUsageFlags.Dynamic),
                 ArcherCount = authoring.ArcherCount,
                 NumberOfBattalions = authoring.NumberOfBattalions,
-                ArcherFormation = authoring.ArcherFormation
+                ArcherFormation = authoring.ArcherFormation,
+                
             });
         }
     }
@@ -33,5 +35,6 @@ namespace Scenes.DevScenes.Lucas_Tests.SpawningScene.Config
         public int ArcherCount;
         public int NumberOfBattalions;
         public int ArcherFormation;
+       
     }
 }
