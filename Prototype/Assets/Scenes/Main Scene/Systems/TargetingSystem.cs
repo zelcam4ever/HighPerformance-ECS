@@ -8,7 +8,6 @@ using UnityEngine;
 
 namespace Scenes.Main_Scene
 {
-    [UpdateAfter(typeof(ArcherSpawningSystem))]
     partial struct TargetingSystem : ISystem
     {
         private NativeArray<float3> RedPositions;
@@ -20,41 +19,40 @@ namespace Scenes.Main_Scene
         {
             state.RequireForUpdate<Config>();
             elapsedTime = SystemAPI.Time.ElapsedTime;
-            RedPositions = new NativeArray<float3>(22500, Allocator.Persistent);
-            BluePositions = new NativeArray<float3>(22500, Allocator.Persistent);
-            NearestTargetPositions = new NativeArray<float3>(22500, Allocator.Persistent);
         }
         
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
+
             if (SystemAPI.Time.ElapsedTime - elapsedTime > 2.0f)
             {
                 var config = SystemAPI.GetSingleton<Config>();
                 
                 int redCount = 0;
+
+           
                 foreach (var archerTransform in SystemAPI.Query<RefRO<LocalTransform>>().WithAll<RedTag, IsAlive>())
                 {
-                    RedPositions[redCount] = archerTransform.ValueRO.Position;
-                    redCount++;
+                    RedPositions[count] = archerTransform.ValueRO.Position;
+                    count++;
                 }
 
-                int blueCount = 0;
+                count = 0;
                 foreach (var archerTransform in SystemAPI.Query<RefRO<LocalTransform>>().WithAll<BlueTag, IsAlive>())
                 {
-                    BluePositions[blueCount] = archerTransform.ValueRO.Position;
-                    blueCount++;
+                    BluePositions[count] = archerTransform.ValueRO.Position;
+                    count++;
                 }
 
                 FindNearestJob findRedTargetsJob = new FindNearestJob
                 {
-                    targetCount = blueCount,
-                    AimerPositions = RedPositions,
-                    TargetPositions = BluePositions,
+                    RedPositions = RedPositions,
+                    BluePositions = BluePositions,
                     NearestTargetPositions = NearestTargetPositions
                 };
 
-                JobHandle findNearestRedHandle = findRedTargetsJob.Schedule(redCount, 64);
+                JobHandle findNearestRedHandle = findRedTargetsJob.Schedule(RedPositions.Length, 64);
                 findNearestRedHandle.Complete();
 
                 int index = 0;
@@ -67,15 +65,16 @@ namespace Scenes.Main_Scene
                     index++;
                 }
 
+                ;
+
                 FindNearestJob findBlueTargetsJob = new FindNearestJob
                 {
-                    targetCount = redCount,
-                    AimerPositions = BluePositions,
-                    TargetPositions = RedPositions,
+                    RedPositions = BluePositions,
+                    BluePositions = RedPositions,
                     NearestTargetPositions = NearestTargetPositions
                 };
 
-                JobHandle findNearestBlueHandle = findBlueTargetsJob.Schedule(blueCount, 64);
+                JobHandle findNearestBlueHandle = findBlueTargetsJob.Schedule(RedPositions.Length, 64);
                 findNearestBlueHandle.Complete();
                 index = 0;
                 foreach (var archer in SystemAPI.Query<RefRW<Archer>, RefRO<LocalTransform>>()
