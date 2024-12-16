@@ -22,22 +22,6 @@ namespace Scenes.Main_Scene
     {
         public override void Bake(ConfigAuthoring authoring)
         {
-            // int armySize;
-            // switch (authoring.BattleSize)
-            // {
-            //     case BattleSize.Tens:
-            //         armySize = 75;
-            //         break;
-            //     case BattleSize.Hundreds:
-            //         armySize = 250;
-            //         break;
-            //     case BattleSize.Thousands:
-            //         armySize = 2500;
-            //         break;
-            //     default:
-            //         armySize = 0;
-            //         break;
-            // }
             var ent = GetEntity(TransformUsageFlags.None);
             AddComponent(ent, new Config
             {
@@ -51,9 +35,7 @@ namespace Scenes.Main_Scene
                 SchedulingType = authoring.SchedulingType,
                 BattleSize = authoring.BattleSize,
                 EnableTargetingDebug = authoring.EnableTargetingDebug,
-                // RedPositions = new NativeArray<float3>(armySize, Allocator.Persistent),
-                // BluePositions = new NativeArray<float3>(armySize, Allocator.Persistent),
-                // NearestTargetPositions = new NativeArray<float3>(armySize, Allocator.Persistent),
+
             });
         }
     }
@@ -70,9 +52,7 @@ namespace Scenes.Main_Scene
         public SchedulingType SchedulingType;
         public BattleSize BattleSize;
         public bool EnableTargetingDebug;
-        // public NativeArray<float3> RedPositions;
-        // public NativeArray<float3> BluePositions;
-        // public NativeArray<float3> NearestTargetPositions;
+
     }
     
 
