@@ -1228,10 +1228,9 @@ MonoBehaviour:
   RedArcherCount: 0
   BlueArcherCount: 0
   BattleSize: 2
-  Soldiers: 0
-  SchedulingType: 0
   SchedulingType: 1
   EnableTargetingDebug: 0
+--- !u!4 &926921531
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
