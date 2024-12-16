@@ -17,6 +17,7 @@ namespace Scenes.Main_Scene
         [Range (0, 45000)]
         public int Soldiers;
         public SchedulingType SchedulingType;
+        public bool EnableTargetingDebug;
         
     }
 
@@ -35,6 +36,10 @@ namespace Scenes.Main_Scene
                 Soldiers = (int)math.sqrt(authoring.Soldiers / 50f),
                 SchedulingType = authoring.SchedulingType,
                 BattleSize = authoring.BattleSize, 
+                EnableTargetingDebug = authoring.EnableTargetingDebug,
+                // RedPositions = new NativeArray<float3>(armySize, Allocator.Persistent),
+                // BluePositions = new NativeArray<float3>(armySize, Allocator.Persistent),
+                // NearestTargetPositions = new NativeArray<float3>(armySize, Allocator.Persistent),
             });
         }
     }
@@ -49,6 +54,10 @@ namespace Scenes.Main_Scene
         public SchedulingType SchedulingType;
         public BattleSize BattleSize;
         public int Soldiers;
+        public bool EnableTargetingDebug;
+        // public NativeArray<float3> RedPositions;
+        // public NativeArray<float3> BluePositions;
+        // public NativeArray<float3> NearestTargetPositions;
     }
     
 

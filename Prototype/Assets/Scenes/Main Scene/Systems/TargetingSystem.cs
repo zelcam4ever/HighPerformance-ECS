@@ -28,9 +28,38 @@ namespace Scenes.Main_Scene
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
+
             if (SystemAPI.Time.ElapsedTime - elapsedTime > 2.0f)
             {
                 int redCount = 0;
+
+ 
+                var config = SystemAPI.GetSingleton<Config>();
+                // It seems wasteful to me that we allocate new space for the native arrays on every frame, but I have tried
+                // with the persistent allocator as well in an (if IsCreated) statement and the performance is identical? Return later
+                // also there is most likely a much nicer way to do this...
+                switch (config.BattleSize)
+                {
+                    case BattleSize.Tens:
+                        RedPositions = new NativeArray<float3>(75, Allocator.TempJob);
+                        BluePositions = new NativeArray<float3>(75, Allocator.TempJob);
+                        NearestTargetPositions = new NativeArray<float3>(75, Allocator.TempJob);
+                        break;
+                    case BattleSize.Hundreds:
+                        RedPositions = new NativeArray<float3>(250, Allocator.TempJob);
+                        BluePositions = new NativeArray<float3>(250, Allocator.TempJob);
+                        NearestTargetPositions = new NativeArray<float3>(250, Allocator.TempJob);
+                        break;
+                    case BattleSize.Thousands:
+                        RedPositions = new NativeArray<float3>(2500, Allocator.TempJob);
+                        BluePositions = new NativeArray<float3>(2500, Allocator.TempJob);
+                        NearestTargetPositions = new NativeArray<float3>(2500, Allocator.TempJob);
+                        break;
+                }
+
+
+                int count = 0;
+
                 foreach (var archerTransform in SystemAPI.Query<RefRO<LocalTransform>>().WithAll<RedTag, IsAlive>())
                 {
                     RedPositions[redCount] = archerTransform.ValueRO.Position;
@@ -60,7 +89,8 @@ namespace Scenes.Main_Scene
                              .WithAll<RedTag, IsAlive>())
                 {
                     archer.Item1.ValueRW.TargetPosition = NearestTargetPositions[index];
-                    Debug.DrawLine(archer.Item2.ValueRO.Position, NearestTargetPositions[index], Color.red, duration: 2.0f);
+                    if(config.EnableTargetingDebug)
+                        Debug.DrawLine(archer.Item2.ValueRO.Position, NearestTargetPositions[index], Color.red, duration: 2.0f);
                     index++;
                 }
 
@@ -79,12 +109,24 @@ namespace Scenes.Main_Scene
                              .WithAll<BlueTag, IsAlive>())
                 {
                     archer.Item1.ValueRW.TargetPosition = NearestTargetPositions[index];
-                    Debug.DrawLine(archer.Item2.ValueRO.Position, NearestTargetPositions[index], Color.blue, duration: 2.0f);
+                    if(config.EnableTargetingDebug)
+                        Debug.DrawLine(archer.Item2.ValueRO.Position, NearestTargetPositions[index], Color.blue, duration: 2.0f);
                     index++;
                 };
 
                 elapsedTime = SystemAPI.Time.ElapsedTime;
+
             }
+
+                
+                if (RedPositions.IsCreated)
+                {
+                    RedPositions.Dispose();
+                    BluePositions.Dispose();
+                    NearestTargetPositions.Dispose();
+                }
+           }
+
         }
         
         [BurstCompile]
