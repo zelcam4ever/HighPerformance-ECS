@@ -8,6 +8,7 @@ using UnityEngine;
 
 namespace Scenes.Main_Scene
 {
+    [UpdateAfter(typeof(ArcherSpawningSystem))]
     partial struct TargetingSystem : ISystem
     {
         private NativeArray<float3> RedPositions;
@@ -19,11 +20,15 @@ namespace Scenes.Main_Scene
         {
             state.RequireForUpdate<Config>();
             elapsedTime = SystemAPI.Time.ElapsedTime;
+            RedPositions = new NativeArray<float3>(22500, Allocator.Persistent);
+            BluePositions = new NativeArray<float3>(22500, Allocator.Persistent);
+            NearestTargetPositions = new NativeArray<float3>(22500, Allocator.Persistent);
         }
         
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
+<<<<<<< HEAD
            if (SystemAPI.Time.ElapsedTime - elapsedTime > 2.0f)
             {
                 var config = SystemAPI.GetSingleton<Config>();
@@ -51,27 +56,35 @@ namespace Scenes.Main_Scene
 
 
                 int count = 0;
+=======
+            if (SystemAPI.Time.ElapsedTime - elapsedTime > 2.0f)
+            {
+                var config = SystemAPI.GetSingleton<Config>();
+                
+                int redCount = 0;
+>>>>>>> parent of 0b2571d (Merge branch 'main' into Peter-new-branch-12-dec)
                 foreach (var archerTransform in SystemAPI.Query<RefRO<LocalTransform>>().WithAll<RedTag, IsAlive>())
                 {
-                    RedPositions[count] = archerTransform.ValueRO.Position;
-                    count++;
+                    RedPositions[redCount] = archerTransform.ValueRO.Position;
+                    redCount++;
                 }
 
-                count = 0;
+                int blueCount = 0;
                 foreach (var archerTransform in SystemAPI.Query<RefRO<LocalTransform>>().WithAll<BlueTag, IsAlive>())
                 {
-                    BluePositions[count] = archerTransform.ValueRO.Position;
-                    count++;
+                    BluePositions[blueCount] = archerTransform.ValueRO.Position;
+                    blueCount++;
                 }
 
                 FindNearestJob findRedTargetsJob = new FindNearestJob
                 {
-                    RedPositions = RedPositions,
-                    BluePositions = BluePositions,
+                    targetCount = blueCount,
+                    AimerPositions = RedPositions,
+                    TargetPositions = BluePositions,
                     NearestTargetPositions = NearestTargetPositions
                 };
 
-                JobHandle findNearestRedHandle = findRedTargetsJob.Schedule(RedPositions.Length, 64);
+                JobHandle findNearestRedHandle = findRedTargetsJob.Schedule(redCount, 64);
                 findNearestRedHandle.Complete();
 
                 int index = 0;
@@ -84,16 +97,15 @@ namespace Scenes.Main_Scene
                     index++;
                 }
 
-                ;
-
                 FindNearestJob findBlueTargetsJob = new FindNearestJob
                 {
-                    RedPositions = BluePositions,
-                    BluePositions = RedPositions,
+                    targetCount = redCount,
+                    AimerPositions = BluePositions,
+                    TargetPositions = RedPositions,
                     NearestTargetPositions = NearestTargetPositions
                 };
 
-                JobHandle findNearestBlueHandle = findBlueTargetsJob.Schedule(RedPositions.Length, 64);
+                JobHandle findNearestBlueHandle = findBlueTargetsJob.Schedule(blueCount, 64);
                 findNearestBlueHandle.Complete();
                 index = 0;
                 foreach (var archer in SystemAPI.Query<RefRW<Archer>, RefRO<LocalTransform>>()

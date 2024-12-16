@@ -8,7 +8,6 @@ namespace Scenes.Main_Scene
     [UpdateAfter(typeof(RigidbodyBakingSystem))]
     [UpdateAfter(typeof(EndJointBakingSystem))]
     [WorldSystemFilter(WorldSystemFilterFlags.BakingSystem)]
-    [UpdateAfter(typeof(ArcherSpawningSystem))]
     public partial struct SetPhysicsMassBehaviourSystem : ISystem
     {
         public void OnUpdate(ref SystemState state)

@@ -4,18 +4,10 @@ using Unity.Collections;
 using Unity.Physics;
 
 
-namespace Scenes.DevScenes.Peter_Test.SpawningScene
+namespace Scenes.Main_Scene
 {
     partial struct DestructionSystem : ISystem
     {
-        private NativeArray<Unity.Physics.Joint> DestructibleJoints;
-
-        [BurstCompile]
-        public void OnCreate(ref SystemState state)
-        {
-
-        }
-
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
@@ -30,15 +22,6 @@ namespace Scenes.DevScenes.Peter_Test.SpawningScene
             }.Schedule(SystemAPI.GetSingleton<SimulationSingleton>(), state.Dependency);
 
             JointDestructionJob.Complete();
-
-
-        }
-
-
-        [BurstCompile]
-        public void OnDestroy(ref SystemState state)
-        {
-
         }
     }
 
