@@ -57,9 +57,6 @@ namespace Scenes.Main_Scene
                         break;
                 }
 
-
-                int count = 0;
-
                 foreach (var archerTransform in SystemAPI.Query<RefRO<LocalTransform>>().WithAll<RedTag, IsAlive>())
                 {
                     RedPositions[redCount] = archerTransform.ValueRO.Position;
@@ -116,7 +113,7 @@ namespace Scenes.Main_Scene
 
                 elapsedTime = SystemAPI.Time.ElapsedTime;
 
-            }
+            
 
                 
                 if (RedPositions.IsCreated)
@@ -125,8 +122,7 @@ namespace Scenes.Main_Scene
                     BluePositions.Dispose();
                     NearestTargetPositions.Dispose();
                 }
-           }
-
+            }
         }
         
         [BurstCompile]
