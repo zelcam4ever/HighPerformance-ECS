@@ -19,6 +19,9 @@ namespace Scenes.Main_Scene
         {
             state.RequireForUpdate<Config>();
             elapsedTime = SystemAPI.Time.ElapsedTime;
+            RedPositions = new NativeArray<float3>(22500, Allocator.Persistent);
+            BluePositions = new NativeArray<float3>(22500, Allocator.Persistent);
+            NearestTargetPositions = new NativeArray<float3>(22500, Allocator.Persistent);
         }
         
         [BurstCompile]
