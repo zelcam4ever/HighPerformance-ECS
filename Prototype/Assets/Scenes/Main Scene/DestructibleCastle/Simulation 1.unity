@@ -1226,13 +1226,8 @@ MonoBehaviour:
   BigBoulderPrefab: {fileID: 486808689964085186, guid: d50ec84e75609ad468b5e7f0f112f243,
     type: 3}
   BattleSize: 2
-
   Soldiers: 0
   SchedulingType: 0
-
-  SchedulingType: 1
-  EnableTargetingDebug: 0
-
 --- !u!4 &926921531
 Transform:
   m_ObjectHideFlags: 0
