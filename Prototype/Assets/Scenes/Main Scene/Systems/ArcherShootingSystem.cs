@@ -9,6 +9,8 @@ using Unity.Mathematics;
 using Unity.Physics;
 using Unity.Physics.Extensions;
 using UnityEngine;
+using static Unity.Entities.SystemAPI;
+using Time = UnityEngine.Time;
 
 namespace Scenes.Main_Scene
 {
@@ -31,11 +33,11 @@ namespace Scenes.Main_Scene
         {
             _localTransformLookup.Update(ref state);
             _localToWorldLookup.Update(ref state);
-            var config = SystemAPI.GetSingleton<Config>();
+            var config = GetSingleton<Config>();
             // Cache current frame count for this update
             int currentFrame = Time.frameCount;
 
-            var ecbSingleton = SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>();
+            var ecbSingleton = GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>();
             
             // Schedule the shooting job
             switch (config.SchedulingType)
@@ -46,7 +48,8 @@ namespace Scenes.Main_Scene
                         CurrentFrame = currentFrame,
                         ECB = ecbSingleton.CreateCommandBuffer(state.WorldUnmanaged).AsParallelWriter(),
                         LocalTransformLookup = _localTransformLookup,
-                        LocalToWorldLookup = _localToWorldLookup
+                        LocalToWorldLookup = _localToWorldLookup,
+                        DeltaTime = Time.deltaTime
                     }.ScheduleParallel(state.Dependency);
                     break;
                 
@@ -56,7 +59,8 @@ namespace Scenes.Main_Scene
                         CurrentFrame = currentFrame,
                         ECB = ecbSingleton.CreateCommandBuffer(state.WorldUnmanaged).AsParallelWriter(),
                         LocalTransformLookup = _localTransformLookup,
-                        LocalToWorldLookup = _localToWorldLookup
+                        LocalToWorldLookup = _localToWorldLookup,
+                        DeltaTime = Time.deltaTime
                     }.Schedule(state.Dependency);
                     break;
             }
@@ -66,11 +70,11 @@ namespace Scenes.Main_Scene
         public partial struct ShootingJob : IJobEntity
         {
             public int CurrentFrame;
+            public float DeltaTime;
             public EntityCommandBuffer.ParallelWriter ECB;
             [ReadOnly] public ComponentLookup<LocalTransform> LocalTransformLookup;
             [ReadOnly] public ComponentLookup<LocalToWorld> LocalToWorldLookup;
-
-            public void Execute([ChunkIndexInQuery] int entityInQueryIndex, in Archer archer,  in IsAlive isAlive)
+            public void Execute([ChunkIndexInQuery] int entityInQueryIndex, ref Archer archer,  in IsAlive isAlive)
             {
                 const float g = 9.8f;
                 
@@ -78,6 +82,7 @@ namespace Scenes.Main_Scene
                     return;
                 if (!LocalToWorldLookup.TryGetComponent(archer.SpawnPoint, out var spawnPoint))
                     return;
+                
                 
                 float3 startPosition = spawnPoint.Position;
                 float3 targetPosition = archer.TargetPosition;
@@ -97,7 +102,6 @@ namespace Scenes.Main_Scene
                 }
                 var total =math.acos(cos);
                 var angle = 1.570f -((total + t) / 2);
-                
                 //Debug.Log(math.degrees(angle));
                 
                 quaternion aimRotation = quaternion.RotateX(angle);
@@ -108,9 +112,17 @@ namespace Scenes.Main_Scene
                     Scale = 1f // Set scale (modify if required)
                 });
                 aimer.Rotation = aimRotation;
+
+           
                 
+                archer.CurrentTimeToShoot += DeltaTime;
+
+                if (archer.CurrentTimeToShoot < archer.TimerReload){
+                    return;
+                }
+                archer.CurrentTimeToShoot = 0;
                 // Move outside job?
-                if (CurrentFrame % (60 * 5) != 0) return;
+                //if (CurrentFrame % (60 * 5) != 0) return;
 
                 // Get the spawn point and projectile prefab
                 // Get the spawn point's LocalToWorld
