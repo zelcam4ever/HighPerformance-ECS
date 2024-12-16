@@ -83,12 +83,12 @@ namespace Scenes.Main_Scene
                     }
                     break;
                 case BattleSize.Carnage:
-                    for (int i = 0; i < 30; i++)
+                    for (int i = 0; i < config.Soldiers; i++)
                     {
-                        for (int j = 0; j < 30; j++)
+                        for (int j = 0; j < config.Soldiers; j++)
                         {
                             float3 position = new float3(i * 10.0f, 0, j * -10.0f); //Can be changed to fit castle locations
-                            float3 offset = new float3(0, 0, 300.0f);
+                            float3 offset = new float3(0, 0, 10 * config.Soldiers);
                             var blueSpawnPoint = state.EntityManager.Instantiate(config.BlueSpawnPoint);
                             state.EntityManager.SetComponentData(blueSpawnPoint, new LocalTransform
                             {
