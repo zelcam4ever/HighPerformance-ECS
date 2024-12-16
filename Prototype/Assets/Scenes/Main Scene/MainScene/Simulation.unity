@@ -444,6 +444,7 @@ MonoBehaviour:
   BattleSize: 3
   Soldiers: 45000
   SchedulingType: 1
+  EnableTargetingDebug: 0
 --- !u!4 &615043230
 Transform:
   m_ObjectHideFlags: 0
