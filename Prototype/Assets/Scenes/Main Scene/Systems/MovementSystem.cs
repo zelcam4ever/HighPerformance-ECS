@@ -32,7 +32,11 @@ namespace Scenes.Main_Scene
                     break;
             }
         }
-        
+
+        [BurstCompile]
+        public void OnDestroy(ref SystemState state)
+        {
+        }
     }
     [BurstCompile]
     [WithAll(typeof(RedTag), typeof(IsAlive))]

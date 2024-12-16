@@ -90,7 +90,7 @@ namespace Scenes.Main_Scene
                 massComponent.InfiniteInertiaZ = false;
                 allMasses[entityB] = massComponent;
                 ecb.RemoveComponent<IsAlive>(entityB);
-                ecb.DestroyEntity(entityA); //can consider this, it removes a bullet if it touches an archer
+                ecb.DestroyEntity(entityA); //can consider this, it removes a bullet if it kills an archer
             }
             else if (allProjectiles.HasComponent(entityB) && allMasses.HasComponent(entityA))
             {

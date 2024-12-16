@@ -1,66 +1,73 @@
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Collections;
+using Unity.Mathematics;
 using Unity.Physics;
+using Unity.Physics.Authoring;
+using UnityEngine;
 
-
-namespace Scenes.DevScenes.Peter_Test.SpawningScene
+partial struct DestructionSystem : ISystem
 {
-    partial struct DestructionSystem : ISystem
+    private NativeArray<Unity.Physics.Joint> DestructibleJoints;
+    
+    [BurstCompile]
+    public void OnCreate(ref SystemState state)
     {
-        private NativeArray<Unity.Physics.Joint> DestructibleJoints;
-
-        [BurstCompile]
-        public void OnCreate(ref SystemState state)
-        {
-
-        }
-
-        [BurstCompile]
-        public void OnUpdate(ref SystemState state)
-        {
-            RefRW<EndSimulationEntityCommandBufferSystem.Singleton> ecb =
-                SystemAPI.GetSingletonRW<EndSimulationEntityCommandBufferSystem.Singleton>();
-
-            // Schedule the collision event job
-            var JointDestructionJob = new JointDestructionEvent
-            {
-                JointCompanionBuffer = SystemAPI.GetBufferLookup<PhysicsJointCompanion>(true),
-                ecb = ecb.ValueRW.CreateCommandBuffer(state.WorldUnmanaged)
-            }.Schedule(SystemAPI.GetSingleton<SimulationSingleton>(), state.Dependency);
-
-            JointDestructionJob.Complete();
-
-
-        }
-
-
-        [BurstCompile]
-        public void OnDestroy(ref SystemState state)
-        {
-
-        }
+        
     }
 
     [BurstCompile]
-    public struct JointDestructionEvent : IImpulseEventsJob
+    public void OnUpdate(ref SystemState state)
     {
-        [ReadOnly] public BufferLookup<PhysicsJointCompanion> JointCompanionBuffer;
-        public EntityCommandBuffer ecb;
+        RefRW<EndSimulationEntityCommandBufferSystem.Singleton> ecb = SystemAPI.GetSingletonRW<EndSimulationEntityCommandBufferSystem.Singleton>();
+        
+        // int count = 0;
+        // foreach (var destructibleJoint in SystemAPI.Query<RefRO<Body>>())
+        // {
+        //     DestructibleJoints[count] = archerTransform.ValueRO.Position;
+        //     //Debug.Log("Red:" + RedPositions[count]);
+        //     count++;
+        // }
 
-        public void Execute(ImpulseEvent impulseEvent)
+        // Schedule the collision event job
+         var JointDestructionJob = new JointCollisionEvent
+         {
+             JointCompanionBuffer = SystemAPI.GetBufferLookup<PhysicsJointCompanion>(true),
+             ecb = ecb.ValueRW.CreateCommandBuffer(state.WorldUnmanaged)
+         }.Schedule(SystemAPI.GetSingleton<SimulationSingleton>(), state.Dependency);
+         
+         JointDestructionJob.Complete();
+         
+         
+    }
+    
+
+    [BurstCompile]
+    public void OnDestroy(ref SystemState state)
+    {
+        
+    }
+}
+
+[BurstCompile]
+public struct JointCollisionEvent : IImpulseEventsJob
+{
+    [ReadOnly] public BufferLookup<PhysicsJointCompanion> JointCompanionBuffer;
+    public EntityCommandBuffer ecb;
+
+    public void Execute(ImpulseEvent impulseEvent)
+    {
+        Entity jointToBreak = impulseEvent.JointEntity;
+        
+        if (JointCompanionBuffer.HasBuffer(jointToBreak))
         {
-            Entity jointToBreak = impulseEvent.JointEntity;
-
-            if (JointCompanionBuffer.HasBuffer(jointToBreak))
+            var jointCompanionBuffer = JointCompanionBuffer[jointToBreak];
+            for (int i = 0; i < jointCompanionBuffer.Length; i++)
             {
-                var jointCompanionBuffer = JointCompanionBuffer[jointToBreak];
-                for (int i = 0; i < jointCompanionBuffer.Length; i++)
-                {
-                    ecb.DestroyEntity(jointCompanionBuffer[i].JointEntity);
-                }
+                // Debug.Log("DESTROYED" + impulseEvent.Impulse);
+                ecb.DestroyEntity(jointCompanionBuffer[i].JointEntity);
             }
-            ecb.DestroyEntity(jointToBreak);
         }
+        ecb.DestroyEntity(jointToBreak);
     }
 }
