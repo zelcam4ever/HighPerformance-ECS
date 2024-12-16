@@ -443,7 +443,7 @@ MonoBehaviour:
     type: 3}
   RedArcherCount: 0
   BlueArcherCount: 0
-  BattleSize: 2
+  BattleSize: 3
   SchedulingType: 1
 --- !u!4 &615043230
 Transform:
@@ -473,6 +473,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpawnArchers: 1
+  SpawnBoulders: 0
   ArcherShooting: 1
   ArrowPhysics: 1
 --- !u!1660057539 &9223372036854775807

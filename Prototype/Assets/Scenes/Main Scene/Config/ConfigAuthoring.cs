@@ -84,5 +84,6 @@ namespace Scenes.Main_Scene
         Tens, //150 (75/75 split)
         Hundreds, //500 (250/250 split)
         Thousands, //5000 (2500/2500 split)
+        Carnage //20000 (10000/10000 split)
     }
 }
