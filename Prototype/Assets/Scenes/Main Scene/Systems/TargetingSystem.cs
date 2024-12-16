@@ -30,6 +30,8 @@ namespace Scenes.Main_Scene
         {
             if (SystemAPI.Time.ElapsedTime - elapsedTime > 2.0f)
             {
+                var config = SystemAPI.GetSingleton<Config>();
+                
                 int redCount = 0;
                 foreach (var archerTransform in SystemAPI.Query<RefRO<LocalTransform>>().WithAll<RedTag, IsAlive>())
                 {
@@ -60,7 +62,8 @@ namespace Scenes.Main_Scene
                              .WithAll<RedTag, IsAlive>())
                 {
                     archer.Item1.ValueRW.TargetPosition = NearestTargetPositions[index];
-                    Debug.DrawLine(archer.Item2.ValueRO.Position, NearestTargetPositions[index], Color.red, duration: 2.0f);
+                    if(config.EnableTargetingDebug)
+                        Debug.DrawLine(archer.Item2.ValueRO.Position, NearestTargetPositions[index], Color.red, duration: 2.0f);
                     index++;
                 }
 
@@ -79,7 +82,8 @@ namespace Scenes.Main_Scene
                              .WithAll<BlueTag, IsAlive>())
                 {
                     archer.Item1.ValueRW.TargetPosition = NearestTargetPositions[index];
-                    Debug.DrawLine(archer.Item2.ValueRO.Position, NearestTargetPositions[index], Color.blue, duration: 2.0f);
+                    if(config.EnableTargetingDebug)
+                        Debug.DrawLine(archer.Item2.ValueRO.Position, NearestTargetPositions[index], Color.blue, duration: 2.0f);
                     index++;
                 };
 

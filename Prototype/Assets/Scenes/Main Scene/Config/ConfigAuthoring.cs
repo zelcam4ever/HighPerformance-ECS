@@ -17,7 +17,7 @@ namespace Scenes.Main_Scene
         [Range (0, 45000)]
         public int Soldiers;
         public SchedulingType SchedulingType;
-        
+        public bool EnableTargetingDebug;
     }
 
     class ConfigAuthoringBaker : Baker<ConfigAuthoring>
@@ -34,7 +34,8 @@ namespace Scenes.Main_Scene
                 BigBoulderPrefab = GetEntity(authoring.BigBoulderPrefab, TransformUsageFlags.Dynamic),
                 Soldiers = (int)math.sqrt(authoring.Soldiers / 50f),
                 SchedulingType = authoring.SchedulingType,
-                BattleSize = authoring.BattleSize, 
+                BattleSize = authoring.BattleSize,
+                EnableTargetingDebug = authoring.EnableTargetingDebug,
             });
         }
     }
@@ -49,6 +50,7 @@ namespace Scenes.Main_Scene
         public SchedulingType SchedulingType;
         public BattleSize BattleSize;
         public int Soldiers;
+        public bool EnableTargetingDebug;
     }
     
 
