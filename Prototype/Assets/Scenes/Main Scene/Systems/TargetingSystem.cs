@@ -59,12 +59,23 @@ namespace Scenes.Main_Scene
                 findNearestRedHandle.Complete();
 
                 int index = 0;
-                foreach (var archer in SystemAPI.Query<RefRW<Archer>, RefRO<LocalTransform>>()
+                foreach (var archer in SystemAPI.Query<RefRW<Archer>, RefRW<LocalTransform>>()
                              .WithAll<RedTag, IsAlive>())
                 {
                     archer.Item1.ValueRW.TargetPosition = NearestTargetPositions[index];
-                    if(config.EnableTargetingDebug)
+
+                    if (config.EnableTargetingDebug)
+                    {
                         Debug.DrawLine(archer.Item2.ValueRO.Position, NearestTargetPositions[index], Color.red, duration: 2.0f);
+                        float3 pos = archer.Item2.ValueRO.Position;
+                        pos.y = 0;
+                    
+                        float3 pos2 = NearestTargetPositions[index];
+                        pos2.y = 0;
+                    
+                        quaternion end = quaternion.LookRotation(pos2 - pos, math.up());
+                        archer.Item2.ValueRW.Rotation = end;
+                    }
                     index++;
                 }
 
@@ -79,12 +90,22 @@ namespace Scenes.Main_Scene
                 JobHandle findNearestBlueHandle = findBlueTargetsJob.Schedule(blueCount, 64);
                 findNearestBlueHandle.Complete();
                 index = 0;
-                foreach (var archer in SystemAPI.Query<RefRW<Archer>, RefRO<LocalTransform>>()
+                foreach (var archer in SystemAPI.Query<RefRW<Archer>, RefRW<LocalTransform>>()
                              .WithAll<BlueTag, IsAlive>())
                 {
                     archer.Item1.ValueRW.TargetPosition = NearestTargetPositions[index];
-                    if(config.EnableTargetingDebug)
+                    if (config.EnableTargetingDebug)
+                    {
                         Debug.DrawLine(archer.Item2.ValueRO.Position, NearestTargetPositions[index], Color.blue, duration: 2.0f);
+                        float3 pos = archer.Item2.ValueRO.Position;
+                        pos.y = 0;
+                    
+                        float3 pos2 = NearestTargetPositions[index];
+                        pos2.y = 0;
+                    
+                        quaternion end = quaternion.LookRotation(pos2 - pos, math.up());
+                        archer.Item2.ValueRW.Rotation = end;
+                    }
                     index++;
                 };
 
