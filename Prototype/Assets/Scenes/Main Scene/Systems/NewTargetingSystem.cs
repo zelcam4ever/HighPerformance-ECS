@@ -53,11 +53,13 @@ namespace Scenes.Main_Scene
                         {
                             blueCount = blueCount,
                             BluePositions = BluePositions,
+                            Config = config
                         }.Schedule(state.Dependency);
                         state.Dependency = new FindNearestRed
                         {
                             redCount = redCount,
                             RedPositions = RedPositions,
+                            Config = config
                         }.Schedule(state.Dependency);
                         break;
                     case SchedulingType.ScheduleParallel:
@@ -65,11 +67,13 @@ namespace Scenes.Main_Scene
                         {
                             blueCount = blueCount,
                             BluePositions = BluePositions,
+                            Config = config
                         }.ScheduleParallel(state.Dependency);
                         state.Dependency = new FindNearestRed
                         {
                             redCount = redCount,
                             RedPositions = RedPositions,
+                            Config = config
                         }.ScheduleParallel(state.Dependency);
                         break;
                 }

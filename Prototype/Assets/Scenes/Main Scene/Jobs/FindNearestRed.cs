@@ -16,6 +16,7 @@ namespace Scenes.Main_Scene
     {
         [ReadOnly] public NativeArray<float3> RedPositions;
         public int redCount;
+        [ReadOnly] public Config Config;
         void Execute(ref LocalTransform blueTransform, ref Archer archer)
         {
             //find nearest red
@@ -43,7 +44,8 @@ namespace Scenes.Main_Scene
             quaternion end = quaternion.LookRotation(pos2 - pos, math.up());
             blueTransform.Rotation = end;
             //draw debug line
-            Debug.DrawLine(blueTransform.Position, targetPos, Color.blue, duration: 2);
+            if(Config.EnableTargetingDebug)
+                Debug.DrawLine(blueTransform.Position, targetPos, Color.blue, duration: 2);
         }
     }
 }
