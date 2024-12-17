@@ -18,7 +18,6 @@ namespace Scenes.Main_Scene
         public int Soldiers;
         public SchedulingType SchedulingType;
         public bool EnableTargetingDebug;
-        
     }
 
     class ConfigAuthoringBaker : Baker<ConfigAuthoring>

@@ -9,6 +9,7 @@ namespace Scenes.Main_Scene
         [Header("Spawn Boulders")] public bool SpawnBoulders;
         [Header("Allow Archers to shoot")] public bool ArcherShooting;
         [Header("Arrow Physics")] public bool ArrowPhysics;
+        [Header("Enable Targeting")] public bool EnableTargeting;
     }
 
     class ExecuteAuthoringBaker : Baker<ExecuteAuthoring>
@@ -20,6 +21,8 @@ namespace Scenes.Main_Scene
             if(authoring.ArcherShooting) AddComponent<ArcherShooting>(entity);
             if(authoring.ArrowPhysics) AddComponent<ArrowPhysics>(entity);
             if(authoring.SpawnBoulders) AddComponent<SpawnBoulders>(entity);
+            if(authoring.EnableTargeting) AddComponent<EnableTargeting>(entity);
+            if(!authoring.EnableTargeting) AddComponent<RandomTargeting>(entity);
         }
     }
     
@@ -27,4 +30,6 @@ namespace Scenes.Main_Scene
     public struct ArcherShooting : IComponentData {}
     public struct ArrowPhysics : IComponentData {}
     public struct SpawnBoulders : IComponentData {}
+    public struct RandomTargeting : IComponentData {}
+    public struct EnableTargeting : IComponentData {}
 }

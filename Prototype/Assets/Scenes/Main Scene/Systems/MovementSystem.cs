@@ -41,7 +41,7 @@ namespace Scenes.Main_Scene
         public float dt;
         void Execute(ref LocalTransform transform)
         {
-            transform.Position += new float3(0, 0, -2 * dt);
+            transform.Position += new float3(0.001f * dt, 0, -2 * dt);
         }
     }
 }
