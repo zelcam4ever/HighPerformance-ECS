@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b275e5f92732148048d7b77e264ac30e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ShapeType: 2
+  m_ShapeType: 0
   m_PrimitiveCenter:
     x: 0
     y: 0
@@ -109,7 +109,7 @@ MonoBehaviour:
     z: 1
   m_PrimitiveOrientation:
     Value:
-      x: -0
+      x: 0
       y: 0
       z: 0
     RotationOrder: 4
@@ -135,7 +135,7 @@ MonoBehaviour:
     m_Template: {fileID: 0}
     m_CollisionResponse:
       m_Override: 0
-      m_Value: 1
+      m_Value: 0
     m_Friction:
       m_Override: 0
       m_Value:
@@ -149,12 +149,12 @@ MonoBehaviour:
     m_BelongsToCategories:
       m_Override: 0
       m_Value:
-        Category00: 0
+        Category00: 1
         Category01: 1
-        Category02: 0
-        Category03: 0
-        Category04: 0
-        Category05: 0
+        Category02: 1
+        Category03: 1
+        Category04: 1
+        Category05: 1
         Category06: 1
         Category07: 1
         Category08: 1
@@ -185,7 +185,7 @@ MonoBehaviour:
       m_Override: 0
       m_Value:
         Category00: 1
-        Category01: 0
+        Category01: 1
         Category02: 1
         Category03: 1
         Category04: 1
@@ -249,7 +249,7 @@ MonoBehaviour:
   m_InitialLinearVelocity:
     x: 0
     y: 0
-    z: 20
+    z: 0
   m_InitialAngularVelocity:
     x: 0
     y: 0

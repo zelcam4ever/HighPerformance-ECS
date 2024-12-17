@@ -14,13 +14,13 @@ namespace Scenes.Main_Scene
             RefRW<EndSimulationEntityCommandBufferSystem.Singleton> ecb =
                 SystemAPI.GetSingletonRW<EndSimulationEntityCommandBufferSystem.Singleton>();
 
-            // Schedule the collision event job
+            // Schedule the impulse event job
             var JointDestructionJob = new JointDestructionEvent
             {
                 JointCompanionBuffer = SystemAPI.GetBufferLookup<PhysicsJointCompanion>(true),
                 ecb = ecb.ValueRW.CreateCommandBuffer(state.WorldUnmanaged)
             }.Schedule(SystemAPI.GetSingleton<SimulationSingleton>(), state.Dependency);
-
+            
             JointDestructionJob.Complete();
         }
     }

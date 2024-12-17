@@ -3,8 +3,6 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 using Unity.Collections;
-using Unity.Jobs;
-using UnityEngine;
 
 namespace Scenes.Main_Scene
 {

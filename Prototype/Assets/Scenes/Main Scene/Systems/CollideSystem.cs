@@ -1,13 +1,8 @@
-using Scenes.DevScenes.Peter_Test.SpawningScene;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Collections;
-using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Physics;
-using Unity.Physics.Systems;
-using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Scenes.Main_Scene
 {

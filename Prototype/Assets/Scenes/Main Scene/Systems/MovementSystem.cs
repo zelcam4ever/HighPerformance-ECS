@@ -1,11 +1,7 @@
 using Unity.Burst;
-using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
-using Unity.Physics;
 using Unity.Transforms;
-using Unity.VisualScripting.FullSerializer;
-using UnityEngine;
 
 namespace Scenes.Main_Scene
 {

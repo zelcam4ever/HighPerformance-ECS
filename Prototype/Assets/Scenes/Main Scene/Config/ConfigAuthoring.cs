@@ -51,7 +51,6 @@ namespace Scenes.Main_Scene
         public BattleSize BattleSize;
         public int Soldiers;
         public bool EnableTargetingDebug;
-
     }
     
 

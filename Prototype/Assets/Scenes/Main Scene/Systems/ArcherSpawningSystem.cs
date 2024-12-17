@@ -1,10 +1,7 @@
 using Unity.Burst;
-using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
-using UnityEngine;
-
 
 namespace Scenes.Main_Scene
 {
@@ -15,7 +12,6 @@ namespace Scenes.Main_Scene
         {
             state.RequireForUpdate<SpawnArchers>();
             state.RequireForUpdate<Config>();
-            //state.RequireForUpdate<RedArcher>();
         }
 
         [BurstCompile]
@@ -24,10 +20,6 @@ namespace Scenes.Main_Scene
             state.Enabled = false;
             
             var config = SystemAPI.GetSingleton<Config>();
-            //var redArcherConfig = SystemAPI.GetSingleton<RedArcher>();
-            
-            // int redFormation = (int)math.sqrt(config.RedArcherCount);
-            // int blueFormation = (int)math.sqrt(config.BlueArcherCount);
 
             foreach (var blueSpawnPoint in SystemAPI.Query<RefRO<LocalTransform>>().WithAll<BlueSpawnPoint>())
             {
@@ -67,11 +59,6 @@ namespace Scenes.Main_Scene
                     }
                 }
             }
-        }
-
-        [BurstCompile]
-        public void OnDestroy()
-        {
         }
     }
 }

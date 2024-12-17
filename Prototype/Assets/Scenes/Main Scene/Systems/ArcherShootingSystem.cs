@@ -1,14 +1,9 @@
-
-using Scenes.DevScenes.Lucas_Tests.SpawningScene.Authorings;
-using Scenes.DevScenes.Lucas_Tests.SpawningScene.Config;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Transforms;
 using Unity.Mathematics;
 using Unity.Physics;
-using Unity.Physics.Extensions;
-using UnityEngine;
 using static Unity.Entities.SystemAPI;
 using Time = UnityEngine.Time;
 
@@ -98,7 +93,6 @@ namespace Scenes.Main_Scene
                 }
                 var total =math.acos(cos);
                 var angle = 1.570f -((total + t) / 2);
-                //Debug.Log(math.degrees(angle));
                 
                 quaternion aimRotation = quaternion.RotateX(angle);
                 ECB.SetComponent(entityInQueryIndex, archer.Aimer, new LocalTransform
@@ -117,11 +111,6 @@ namespace Scenes.Main_Scene
                     return;
                 }
                 archer.CurrentTimeToShoot = 0;
-     
-                // Get the spawn point and projectile prefab
-                // Get the spawn point's LocalToWorld
-                 // Skip if spawn point data is missing
-
 
                 // Instantiate the projectile
                 var projectile = ECB.Instantiate(entityInQueryIndex, archer.ProjectilePrefab);

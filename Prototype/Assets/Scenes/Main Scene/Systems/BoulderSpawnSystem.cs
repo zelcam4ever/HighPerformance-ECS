@@ -1,9 +1,7 @@
-using System.Threading;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
-using UnityEngine;
 
 namespace Scenes.Main_Scene
 {
@@ -36,12 +34,6 @@ namespace Scenes.Main_Scene
                     Scale = 4.0f
                 });
             }
-        }
-
-        [BurstCompile]
-        public void OnDestroy(ref SystemState state)
-        {
-
         }
     }
 }

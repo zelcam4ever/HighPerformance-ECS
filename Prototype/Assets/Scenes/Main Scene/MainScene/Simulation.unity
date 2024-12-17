@@ -442,7 +442,7 @@ MonoBehaviour:
   BigBoulderPrefab: {fileID: 486808689964085186, guid: d50ec84e75609ad468b5e7f0f112f243,
     type: 3}
   BattleSize: 3
-  Soldiers: 10000
+  Soldiers: 45000
   SchedulingType: 1
   EnableTargetingDebug: 0
 --- !u!4 &615043230

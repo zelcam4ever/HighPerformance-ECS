@@ -12,7 +12,6 @@ namespace Scenes.Main_Scene
     {
         public void OnUpdate(ref SystemState state)
         {
-            // Fill in the MassProperties based on the potential calculated value by BuildCompoundColliderBakingSystem
             foreach (var (mass, setPhysicsMass)
                      in SystemAPI.Query<RefRW<PhysicsMass>, RefRO<SetPhysicsMass>>()
                          .WithOptions(EntityQueryOptions.IncludePrefab | EntityQueryOptions.IncludeDisabledEntities))
