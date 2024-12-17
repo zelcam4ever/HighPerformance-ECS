@@ -35,7 +35,6 @@ namespace Scenes.Main_Scene
             _localToWorldLookup.Update(ref state);
             var config = GetSingleton<Config>();
             // Cache current frame count for this update
-            int currentFrame = Time.frameCount;
 
             var ecbSingleton = GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>();
             
@@ -45,7 +44,6 @@ namespace Scenes.Main_Scene
                 case SchedulingType.ScheduleParallel:
                     state.Dependency = new ShootingJob
                     {
-                        CurrentFrame = currentFrame,
                         ECB = ecbSingleton.CreateCommandBuffer(state.WorldUnmanaged).AsParallelWriter(),
                         LocalTransformLookup = _localTransformLookup,
                         LocalToWorldLookup = _localToWorldLookup,
@@ -56,7 +54,6 @@ namespace Scenes.Main_Scene
                 case SchedulingType.Schedule:
                     state.Dependency = new ShootingJob
                     {
-                        CurrentFrame = currentFrame,
                         ECB = ecbSingleton.CreateCommandBuffer(state.WorldUnmanaged).AsParallelWriter(),
                         LocalTransformLookup = _localTransformLookup,
                         LocalToWorldLookup = _localToWorldLookup,
@@ -69,7 +66,6 @@ namespace Scenes.Main_Scene
         [BurstCompile]
         public partial struct ShootingJob : IJobEntity
         {
-            public int CurrentFrame;
             public float DeltaTime;
             public EntityCommandBuffer.ParallelWriter ECB;
             [ReadOnly] public ComponentLookup<LocalTransform> LocalTransformLookup;
@@ -121,9 +117,7 @@ namespace Scenes.Main_Scene
                     return;
                 }
                 archer.CurrentTimeToShoot = 0;
-                // Move outside job?
-                //if (CurrentFrame % (60 * 5) != 0) return;
-
+     
                 // Get the spawn point and projectile prefab
                 // Get the spawn point's LocalToWorld
                  // Skip if spawn point data is missing
