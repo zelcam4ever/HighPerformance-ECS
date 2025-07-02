@@ -1,5 +1,5 @@
 # High Performance Course - ITU 2024
-This development of this README has been discontinued
+The development of this README has been discontinued
 
 ## Dev-Log
 ### 30 - October
